@@ -7,7 +7,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import {  Layout, Menu, theme } from 'antd';
 import './index.scss'; 
 import DashboardAdmin from '../containers/DashboardAdmin';
 
@@ -44,7 +44,7 @@ const items: MenuItem[] = [
 const LayoutAdmin: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
-    token: { colorBgContainer },
+    token: {  },
   } = theme.useToken();
 
   return (
