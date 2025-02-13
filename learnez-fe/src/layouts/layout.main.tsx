@@ -10,6 +10,7 @@ import type { MenuProps } from 'antd';
 import {  Layout, Menu, theme } from 'antd';
 import './index.scss'; 
 import DashboardAdmin from '../containers/DashboardAdmin';
+import HeaderMain from '../components/templatee/Header/HeaderMain';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -49,12 +50,12 @@ const LayoutAdmin: React.FC = () => {
 
   return (
     <Layout className="layout">
-      <Sider className="sider" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+      {/* <Sider className="sider" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         <div className="demo-logo-vertical" />
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
-      </Sider>
+      </Sider> */}
       <Layout>
-        <Header className="header" />
+        <HeaderMain />
         <Content className="content">
           {/* <Breadcrumb className="breadcrumb">
                         <Breadcrumb.Item>User</Breadcrumb.Item>
