@@ -11,6 +11,7 @@ import {  Layout,theme } from 'antd';
 import './index.scss'; 
 import DashboardAdmin from '../containers/DashboardAdmin';
 import HeaderMain from '../components/templatee/Header/HeaderMain';
+import SidebarAdmin from '../components/templatee/SidebarAdmin/SidebarAdmin';
 
 const {  Content, Footer } = Layout;
 
@@ -54,6 +55,7 @@ const LayoutAdmin: React.FC = () => {
         <div className="demo-logo-vertical" />
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
       </Sider> */}
+      <SidebarAdmin />
       <Layout>
         <HeaderMain />
         <Content className="content">
