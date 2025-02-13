@@ -10,6 +10,7 @@ import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import '../styles/dashboard.scss'; // Import SCSS
 import DashboardAdmin from '../../../containers/DashboardAdmin';
+import HeaderMain from '../Header/HeaderMain';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -48,11 +49,15 @@ const NavbarAdmin: React.FC = () => {
     } = theme.useToken();
 
     return (
+     <>
+     <HeaderMain/>
+    
         <Layout className="layout">
             <Sider className="sider" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
                 <div className="demo-logo-vertical" />
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
             </Sider>
+            
             <Layout>
                 <Header className="header" />
                 <Content className="content">
@@ -67,6 +72,7 @@ const NavbarAdmin: React.FC = () => {
                 <Footer className="footer">Ant Design ©{new Date().getFullYear()} Created by Ant UED</Footer>
             </Layout>
         </Layout>
+        </>
     );
 };
 
