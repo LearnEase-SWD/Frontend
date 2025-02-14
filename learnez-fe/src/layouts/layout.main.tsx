@@ -13,7 +13,7 @@ import DashboardAdmin from "../containers/DashboardAdmin";
 import HeaderMain from "../components/templatee/Header/HeaderMain";
 import SidebarAdmin from "../components/templatee/SidebarAdmin/SidebarAdmin";
 
-const { Content, Footer } = Layout;
+const {  Footer } = Layout;
 
 // type MenuItem = Required<MenuProps>['items'][number];
 

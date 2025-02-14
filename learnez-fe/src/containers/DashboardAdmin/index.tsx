@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import "./index.scss";
 import {
   DollarOutlined,
@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 
 const DashboardAdmin = () => {
-  const [active, setActive] = useState("Month");
+  
 
   return (
     <div className="page-container">
