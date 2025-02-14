@@ -1,11 +1,12 @@
-import {  BellOutlined, LockOutlined, LogoutOutlined, MailOutlined, MenuFoldOutlined, MenuUnfoldOutlined, ProjectOutlined, RightOutlined, SearchOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
-
+import { BellOutlined, LockOutlined, LogoutOutlined, MailOutlined, MenuFoldOutlined, MenuUnfoldOutlined, ProjectOutlined, RightOutlined, SearchOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import "./index.scss";
 const HeaderMain: React.FC = () => {
   return (
     <div className="header-main">
       <div className="header">
         <div className="logo logo-dark">
-          <a href="">
+          <a href="/dashboard">
             <img src="src/assets/logo-webapp-admin.png" alt="Logo" />
             <img
               className="logo-fold"
@@ -191,13 +192,14 @@ const HeaderMain: React.FC = () => {
                   href="javascript:void(0);"
                   className="dropdown-item d-block p-h-15 p-v-10"
                 >
-                  <div className="d-flex align-items-center justify-content-between">
-                    <div>
-                      <LogoutOutlined />
-                      <span className="m-l-10">Logout</span>
+                  <a href="/" className="log-out-button">
+                    <div className="d-flex align-items-center justify-content-between">
+                      <div>
+                        <LogoutOutlined />
+                        <span className="m-l-10">Logout</span>
+                      </div>
                     </div>
-                    <RightOutlined />
-                  </div>
+                  </a>
                 </a>
               </div>
             </li>
