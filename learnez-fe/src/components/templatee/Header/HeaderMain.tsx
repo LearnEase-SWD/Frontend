@@ -1,5 +1,4 @@
 import { AppstoreOutlined, BellOutlined, LockOutlined, LogoutOutlined, MailOutlined, MenuFoldOutlined, MenuUnfoldOutlined, ProjectOutlined, RightOutlined, SearchOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
-import "./index.scss";
 
 const HeaderMain: React.FC = () => {
   return (
@@ -215,6 +214,7 @@ const HeaderMain: React.FC = () => {
         </div>
       </div>
     </div>
+    
   );
 };
 

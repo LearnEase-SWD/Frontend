@@ -1,5 +1,4 @@
 import { AppstoreOutlined, BuildOutlined, DashboardOutlined, FileOutlined, FormOutlined, HddOutlined, LockOutlined, PieChartOutlined, TableOutlined } from "@ant-design/icons";
-import "../Header/index.scss";
 
 const SidebarAdmin: React.FC = () => {
   return (
