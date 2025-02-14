@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 // import {
 //   DesktopOutlined,
 //   FileOutlined,
@@ -7,13 +7,13 @@ import React from 'react';
 //   UserOutlined,
 // } from '@ant-design/icons';
 // import type { MenuProps } from 'antd';
-import {  Layout,theme } from 'antd';
-import './index.scss'; 
-import DashboardAdmin from '../containers/DashboardAdmin';
-import HeaderMain from '../components/templatee/Header/HeaderMain';
-import SidebarAdmin from '../components/templatee/SidebarAdmin/SidebarAdmin';
+import { Layout, theme } from "antd";
+import "./index.scss";
+import DashboardAdmin from "../containers/DashboardAdmin";
+import HeaderMain from "../components/templatee/Header/HeaderMain";
+import SidebarAdmin from "../components/templatee/SidebarAdmin/SidebarAdmin";
 
-const {  Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 // type MenuItem = Required<MenuProps>['items'][number];
 
@@ -46,7 +46,7 @@ const {  Content, Footer } = Layout;
 const LayoutAdmin: React.FC = () => {
   // const [collapsed, setCollapsed] = useState(false);
   const {
-    token: {  },
+    token: {},
   } = theme.useToken();
 
   return (
@@ -58,16 +58,17 @@ const LayoutAdmin: React.FC = () => {
       <SidebarAdmin />
       <Layout>
         <HeaderMain />
-        <Content className="content">
-          {/* <Breadcrumb className="breadcrumb">
+
+        {/* <Breadcrumb className="breadcrumb">
                         <Breadcrumb.Item>User</Breadcrumb.Item>
                         <Breadcrumb.Item>Bill</Breadcrumb.Item>
                     </Breadcrumb> */}
-          <div className="content-box">
-            <DashboardAdmin />
-          </div>
-        </Content>
-        <Footer className="footer">LearnEase ©{new Date().getFullYear()} Created by Team 4</Footer>
+
+        <DashboardAdmin />
+
+        <Footer className="footer">
+          LearnEase ©{new Date().getFullYear()} Created by Team 4
+        </Footer>
       </Layout>
     </Layout>
   );
