@@ -44,7 +44,7 @@ const items: MenuItem[] = [
 const NavbarAdmin: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     const {
-        token: { colorBgContainer },
+        token: {},
     } = theme.useToken();
 
     return (

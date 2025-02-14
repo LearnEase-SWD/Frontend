@@ -7,8 +7,8 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import './index.scss'; 
+import { Layout, Menu, theme } from 'antd';
+import './index.scss';
 import DashboardAdmin from '../containers/DashboardAdmin';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -44,17 +44,17 @@ const items: MenuItem[] = [
 const LayoutAdmin: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
-    token: { colorBgContainer },
+    token: { },
   } = theme.useToken();
 
   return (
     <Layout className="layout">
       <Sider className="sider" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         <div className="demo-logo-vertical" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+        <Menu theme="light" defaultSelectedKeys={['1']} mode="inline" items={items} />
       </Sider>
       <Layout>
-        <Header className="header" />
+
         <Content className="content">
           {/* <Breadcrumb className="breadcrumb">
                         <Breadcrumb.Item>User</Breadcrumb.Item>
