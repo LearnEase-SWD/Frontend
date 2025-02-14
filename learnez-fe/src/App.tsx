@@ -4,7 +4,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LayoutAdmin from './layouts/layout.main';
 import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
 import ErrorPage from './pages/ErrorPage';
 
 

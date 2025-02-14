@@ -1,5 +1,4 @@
 import { BellOutlined, LockOutlined, LogoutOutlined, MailOutlined, MenuFoldOutlined, MenuUnfoldOutlined, ProjectOutlined, RightOutlined, SearchOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
 import "./index.scss";
 const HeaderMain: React.FC = () => {
   return (
