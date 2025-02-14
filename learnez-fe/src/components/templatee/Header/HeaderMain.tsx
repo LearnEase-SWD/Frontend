@@ -6,10 +6,10 @@ const HeaderMain: React.FC = () => {
       <div className="header">
         <div className="logo logo-dark">
           <a href="">
-          <img src="src/assets/logo-rbg.png" alt="Logo" style={{ width: '130px', height: '65px' }} />
+            <img src="src/assets/logo-webapp-admin.png" alt="Logo" />
             <img
               className="logo-fold"
-              src="src/assets/logo-fold.jpg"
+              src="src/assets/logo-mini.jpg"
               alt="Logo"
             />
           </a>
@@ -18,12 +18,12 @@ const HeaderMain: React.FC = () => {
           <ul className="nav-left">
             <li className="desktop-toggle">
               <a href="javascript:void(0);">
-              <MenuFoldOutlined />
+                <MenuFoldOutlined />
               </a>
             </li>
             <li className="mobile-toggle">
               <a href="javascript:void(0);">
-              <MenuUnfoldOutlined  />
+                <MenuUnfoldOutlined />
               </a>
             </li>
             <li>
@@ -39,12 +39,12 @@ const HeaderMain: React.FC = () => {
           <ul className="nav-right">
             <li className="dropdown dropdown-animated scale-left">
               <a href="javascript:void(0);" data-toggle="dropdown">
-              <BellOutlined />
+                <BellOutlined />
               </a>
               <div className="dropdown-menu pop-notification">
                 <div className="p-v-15 p-h-25 border-bottom d-flex justify-content-between align-items-center">
                   <p className="text-dark font-weight-semibold m-b-0">
-                  <BellOutlined />
+                    <BellOutlined />
                     <span className="m-l-10">Notification</span>
                   </p>
                   <a
@@ -65,7 +65,7 @@ const HeaderMain: React.FC = () => {
                     >
                       <div className="d-flex">
                         <div className="avatar avatar-blue avatar-icon">
-                        <MailOutlined />
+                          <MailOutlined />
                         </div>
                         <div className="m-l-15">
                           <p className="m-b-0 text-dark">
@@ -83,7 +83,7 @@ const HeaderMain: React.FC = () => {
                     >
                       <div className="d-flex">
                         <div className="avatar avatar-cyan avatar-icon">
-                        <UserAddOutlined />
+                          <UserAddOutlined />
                         </div>
                         <div className="m-l-15">
                           <p className="m-b-0 text-dark">New user registered</p>
@@ -99,7 +99,7 @@ const HeaderMain: React.FC = () => {
                     >
                       <div className="d-flex">
                         <div className="avatar avatar-red avatar-icon">
-                        <UserAddOutlined />
+                          <UserAddOutlined />
                         </div>
                         <div className="m-l-15">
                           <p className="m-b-0 text-dark">System Alert</p>
@@ -115,7 +115,7 @@ const HeaderMain: React.FC = () => {
                     >
                       <div className="d-flex">
                         <div className="avatar avatar-gold avatar-icon">
-                        <UserAddOutlined />
+                          <UserAddOutlined />
                         </div>
                         <div className="m-l-15">
                           <p className="m-b-0 text-dark">
@@ -157,7 +157,7 @@ const HeaderMain: React.FC = () => {
                 >
                   <div className="d-flex align-items-center justify-content-between">
                     <div>
-                    <UserOutlined />
+                      <UserOutlined />
                       <span className="m-l-10">Edit Profile</span>
                     </div>
                     <RightOutlined />
@@ -169,7 +169,7 @@ const HeaderMain: React.FC = () => {
                 >
                   <div className="d-flex align-items-center justify-content-between">
                     <div>
-                    <LockOutlined />
+                      <LockOutlined />
                       <span className="m-l-10">Account Setting</span>
                     </div>
                     <RightOutlined />
@@ -181,7 +181,7 @@ const HeaderMain: React.FC = () => {
                 >
                   <div className="d-flex align-items-center justify-content-between">
                     <div>
-                    <ProjectOutlined />
+                      <ProjectOutlined />
                       <span className="m-l-10">Projects</span>
                     </div>
                     <RightOutlined />
@@ -193,7 +193,7 @@ const HeaderMain: React.FC = () => {
                 >
                   <div className="d-flex align-items-center justify-content-between">
                     <div>
-                    <LogoutOutlined />
+                      <LogoutOutlined />
                       <span className="m-l-10">Logout</span>
                     </div>
                     <RightOutlined />
@@ -201,20 +201,12 @@ const HeaderMain: React.FC = () => {
                 </a>
               </div>
             </li>
-            <li>
-              <a
-                href="javascript:void(0);"
-                data-toggle="modal"
-                data-target="#quick-view"
-              >
-                <AppstoreOutlined />
-              </a>
-            </li>
+
           </ul>
         </div>
       </div>
     </div>
-    
+
   );
 };
 

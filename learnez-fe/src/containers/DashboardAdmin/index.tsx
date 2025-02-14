@@ -1,5 +1,4 @@
 
-import "./index.scss";
 import {
   DollarOutlined,
   LineChartOutlined,
@@ -8,7 +7,7 @@ import {
 } from "@ant-design/icons";
 
 const DashboardAdmin = () => {
-  
+
 
   return (
     <div className="page-container">
@@ -19,7 +18,7 @@ const DashboardAdmin = () => {
               <div className="card-body">
                 <div className="media align-items-center">
                   <div className="avatar avatar-icon avatar-lg avatar-blue">
-                    <DollarOutlined/>
+                    <DollarOutlined />
                   </div>
                   <div className="m-l-15">
                     <h2 className="m-b-0">$23,523</h2>
@@ -34,7 +33,7 @@ const DashboardAdmin = () => {
               <div className="card-body">
                 <div className="media align-items-center">
                   <div className="avatar avatar-icon avatar-lg avatar-cyan">
-                    <LineChartOutlined/>
+                    <LineChartOutlined />
                   </div>
                   <div className="m-l-15">
                     <h2 className="m-b-0">+ 17.21%</h2>
@@ -49,7 +48,7 @@ const DashboardAdmin = () => {
               <div className="card-body">
                 <div className="media align-items-center">
                   <div className="avatar avatar-icon avatar-lg avatar-gold">
-                    <ProfileOutlined/>
+                    <ProfileOutlined />
                   </div>
                   <div className="m-l-15">
                     <h2 className="m-b-0">3,685</h2>
@@ -64,7 +63,7 @@ const DashboardAdmin = () => {
               <div className="card-body">
                 <div className="media align-items-center">
                   <div className="avatar avatar-icon avatar-lg avatar-purple">
-                    <UserOutlined/>
+                    <UserOutlined />
                   </div>
                   <div className="m-l-15">
                     <h2 className="m-b-0">1,832</h2>
@@ -194,12 +193,6 @@ const DashboardAdmin = () => {
                         <tr>
                           <td>
                             <div className="media align-items-center">
-                              <div className="avatar avatar-image rounded">
-                                <img
-                                  src="assets/images/others/thumb-9.jpg"
-                                  alt=""
-                                />
-                              </div>
                               <div className="m-l-10">
                                 <span>Gray Sofa</span>
                               </div>
@@ -222,12 +215,7 @@ const DashboardAdmin = () => {
                         <tr>
                           <td>
                             <div className="media align-items-center">
-                              <div className="avatar avatar-image rounded">
-                                <img
-                                  src="assets/images/others/thumb-10.jpg"
-                                  alt=""
-                                />
-                              </div>
+
                               <div className="m-l-10">
                                 <span>Gray Sofa</span>
                               </div>
@@ -250,12 +238,7 @@ const DashboardAdmin = () => {
                         <tr>
                           <td>
                             <div className="media align-items-center">
-                              <div className="avatar avatar-image rounded">
-                                <img
-                                  src="assets/images/others/thumb-11.jpg"
-                                  alt=""
-                                />
-                              </div>
+
                               <div className="m-l-10">
                                 <span>Wooden Rhino</span>
                               </div>
@@ -278,12 +261,7 @@ const DashboardAdmin = () => {
                         <tr>
                           <td>
                             <div className="media align-items-center">
-                              <div className="avatar avatar-image rounded">
-                                <img
-                                  src="assets/images/others/thumb-12.jpg"
-                                  alt=""
-                                />
-                              </div>
+
                               <div className="m-l-10">
                                 <span>Red Chair</span>
                               </div>
@@ -306,12 +284,7 @@ const DashboardAdmin = () => {
                         <tr>
                           <td>
                             <div className="media align-items-center">
-                              <div className="avatar avatar-image rounded">
-                                <img
-                                  src="assets/images/others/thumb-13.jpg"
-                                  alt=""
-                                />
-                              </div>
+
                               <div className="m-l-10">
                                 <span>Wristband</span>
                               </div>
