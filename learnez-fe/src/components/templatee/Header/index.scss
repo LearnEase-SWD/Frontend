@@ -1,0 +1,11 @@
+.header-main {
+    .log-out-button {
+        cursor: pointer;
+
+        color: #f30000;
+
+        &:hover {
+            color: #7f0000;
+        }
+    }
+}
