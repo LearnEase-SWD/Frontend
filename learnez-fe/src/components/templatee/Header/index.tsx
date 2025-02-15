@@ -6,10 +6,10 @@ const HeaderMain: React.FC = () => {
       <div className="header">
         <div className="logo logo-dark">
           <a href="/dashboard">
-            <img src="src/assets/logo-webapp-admin.png" alt="Logo" />
+            <img src={"/static/images/logo-webapp-admin.png"} alt="Logo" />
             <img
               className="logo-fold"
-              src="src/assets/logo-mini.jpg"
+              src={"/static/images/logo-mini.jpg"}
               alt="Logo"
             />
           </a>
@@ -134,14 +134,14 @@ const HeaderMain: React.FC = () => {
             <li className="dropdown dropdown-animated scale-left">
               <div className="pointer" data-toggle="dropdown">
                 <div className="avatar avatar-image  m-h-10 m-r-15">
-                  <img src="src/assets/431314300_1444305756173997_6934607628460958573_n.jpg" alt="" />
+                  <img src={"/static/images/431314300_1444305756173997_6934607628460958573_n.jpg"} alt="" />
                 </div>
               </div>
               <div className="p-b-15 p-t-20 dropdown-menu pop-profile">
                 <div className="p-h-20 p-b-15 m-b-10 border-bottom">
                   <div className="d-flex m-r-50">
                     <div className="avatar avatar-lg avatar-image">
-                      <img src="assets/images/avatars/thumb-3.jpg" alt="" />
+                      <img src={"/static/images/avatars/thumb-3.jpg"} alt="" />
                     </div>
                     <div className="m-l-10">
                       <p className="m-b-0 text-dark font-weight-semibold">

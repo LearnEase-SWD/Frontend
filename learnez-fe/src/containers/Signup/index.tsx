@@ -5,12 +5,12 @@ const Signup = () => {
             <div className="container-fluid">
                 <div className="d-flex full-height p-v-20 flex-column justify-content-between">
                     <div className="d-none d-md-flex p-h-40">
-                        <img src="src/assets/logo-webapp-admin.png" alt="" />
+                        <img src={"/static/images/logo-webapp-admin.png"} alt="" />
                     </div>
                     <div className="container">
                         <div className="row align-items-center">
                             <div className="col-md-6 d-none d-md-block">
-                                <img className="img-fluid" src="src/assets/sign-up-2.png" alt="" />
+                                <img className="img-fluid" src={"/static/images/sign-up-2.png"} alt="" />
                             </div>
                             <div className="m-l-auto col-md-5">
                                 <div className="card">

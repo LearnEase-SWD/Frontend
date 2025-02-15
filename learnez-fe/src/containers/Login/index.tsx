@@ -6,7 +6,7 @@ const Login = () => {
             <div className="container-fluid">
                 <div className="d-flex full-height p-v-15 flex-column justify-content-between">
                     <div className="d-none d-md-flex p-h-40">
-                        <img src="src/assets/logo-webapp-admin.png" alt="" />
+                        <img src={"/static/images/logo-webapp-admin.png"} alt="" />
                     </div>
                     <div className="container">
                         <div className="row align-items-center">
@@ -55,7 +55,7 @@ const Login = () => {
                                 </div>
                             </div>
                             <div className="offset-md-1 col-md-6 d-none d-md-block">
-                                <img className="img-fluid" src="src/assets/login-2.png" alt="" />
+                                <img className="img-fluid" src={"src/assets/login-2.png"} alt="" />
                             </div>
                         </div>
                     </div>

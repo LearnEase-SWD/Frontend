@@ -5,7 +5,7 @@ const Error404 = () => {
             <div className="container-fluid">
                 <div className="d-flex full-height p-v-20 flex-column justify-content-between">
                     <div className="d-none d-md-flex p-h-40">               
-                            <img src="src/assets/logo-webapp-admin.png" alt="" />
+                            <img src={"/static/images/logo-webapp-admin.png"} alt="" />
 
                     </div>
                     <div className="container">
@@ -19,7 +19,7 @@ const Error404 = () => {
                                 </div>
                             </div>
                             <div className="col-md-6 m-l-auto">
-                                <img className="img-fluid" src="src/assets/error-1.png" alt="" />
+                                <img className="img-fluid" src={"/static/images/error-1.png"} alt="" />
                             </div>
                         </div>
                     </div>
