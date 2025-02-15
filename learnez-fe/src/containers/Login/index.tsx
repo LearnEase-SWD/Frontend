@@ -55,7 +55,7 @@ const Login = () => {
                                 </div>
                             </div>
                             <div className="offset-md-1 col-md-6 d-none d-md-block">
-                                <img className="img-fluid" src={"src/assets/login-2.png"} alt="" />
+                                <img className="img-fluid" src={"/static/images/login-2.png"} alt="" />
                             </div>
                         </div>
                     </div>
