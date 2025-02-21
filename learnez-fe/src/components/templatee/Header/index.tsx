@@ -1,38 +1,35 @@
-import { BellOutlined, LockOutlined, LogoutOutlined, MailOutlined, MenuFoldOutlined, MenuUnfoldOutlined, ProjectOutlined, RightOutlined, SearchOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
+import { 
+  BellOutlined, LockOutlined, LogoutOutlined, MailOutlined, 
+  MenuFoldOutlined, MenuUnfoldOutlined, ProjectOutlined, 
+  RightOutlined, UserAddOutlined, UserOutlined 
+} from "@ant-design/icons";
 import "./index.scss";
-const HeaderMain: React.FC = () => {
+interface HeaderMainProps {
+  isFolded: boolean;
+  toggleSidebar: () => void;
+}
+
+const HeaderMain: React.FC<HeaderMainProps> = ({ isFolded, toggleSidebar }) => {
+
   return (
-    <div className="header-main">
+    <div className={`header-main ${isFolded ? "is-folded" : ""}`}>
       <div className="header">
-        <div className="logo logo-dark">
+        <div className={`logo ${isFolded ? "is-folded" : ""}`}>
           <a href="/dashboard">
             <img src={"/static/images/logo-webapp-admin.png"} alt="Logo" />
-            <img
-              className="logo-fold"
-              src={"/static/images/logo-mini.jpg"}
-              alt="Logo"
-            />
+            <img className="logo-fold" src={"/static/images/Logo-mini.png"} alt="Logo" />
           </a>
         </div>
         <div className="nav-wrap">
           <ul className="nav-left">
             <li className="desktop-toggle">
-              <a href="javascript:void(0);">
-                <MenuFoldOutlined />
+              <a onClick={toggleSidebar}>
+                {isFolded ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               </a>
             </li>
             <li className="mobile-toggle">
-              <a href="javascript:void(0);">
-                <MenuUnfoldOutlined />
-              </a>
-            </li>
-            <li>
-              <a
-                href="javascript:void(0);"
-                data-toggle="modal"
-                data-target="#search-drawer"
-              >
-                <SearchOutlined />
+              <a onClick={toggleSidebar}>
+                {isFolded ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               </a>
             </li>
           </ul>
@@ -47,83 +44,53 @@ const HeaderMain: React.FC = () => {
                     <BellOutlined />
                     <span className="m-l-10">Notification</span>
                   </p>
-                  <a
-                    className="btn-sm btn-default btn"
-                    href="javascript:void(0);"
-                  >
+                  <a className="btn-sm btn-default btn" href="javascript:void(0);">
                     <small>View All</small>
                   </a>
                 </div>
                 <div className="relative">
-                  <div
-                    className="overflow-y-auto relative scrollable"
-                    style={{ maxHeight: "300px" }}
-                  >
-                    <a
-                      href="javascript:void(0);"
-                      className="dropdown-item d-block p-15 border-bottom"
-                    >
+                  <div className="overflow-y-auto relative scrollable" style={{ maxHeight: "300px" }}>
+                    <a href="javascript:void(0);" className="dropdown-item d-block p-15 border-bottom">
                       <div className="d-flex">
                         <div className="avatar avatar-blue avatar-icon">
                           <MailOutlined />
                         </div>
                         <div className="m-l-15">
-                          <p className="m-b-0 text-dark">
-                            You received a new message
-                          </p>
-                          <p className="m-b-0">
-                            <small>8 min ago</small>
-                          </p>
+                          <p className="m-b-0 text-dark">You received a new message</p>
+                          <p className="m-b-0"><small>8 min ago</small></p>
                         </div>
                       </div>
                     </a>
-                    <a
-                      href="javascript:void(0);"
-                      className="dropdown-item d-block p-15 border-bottom"
-                    >
+                    <a href="javascript:void(0);" className="dropdown-item d-block p-15 border-bottom">
                       <div className="d-flex">
                         <div className="avatar avatar-cyan avatar-icon">
                           <UserAddOutlined />
                         </div>
                         <div className="m-l-15">
                           <p className="m-b-0 text-dark">New user registered</p>
-                          <p className="m-b-0">
-                            <small>7 hours ago</small>
-                          </p>
+                          <p className="m-b-0"><small>7 hours ago</small></p>
                         </div>
                       </div>
                     </a>
-                    <a
-                      href="javascript:void(0);"
-                      className="dropdown-item d-block p-15 border-bottom"
-                    >
+                    <a href="javascript:void(0);" className="dropdown-item d-block p-15 border-bottom">
                       <div className="d-flex">
                         <div className="avatar avatar-red avatar-icon">
                           <UserAddOutlined />
                         </div>
                         <div className="m-l-15">
                           <p className="m-b-0 text-dark">System Alert</p>
-                          <p className="m-b-0">
-                            <small>8 hours ago</small>
-                          </p>
+                          <p className="m-b-0"><small>8 hours ago</small></p>
                         </div>
                       </div>
                     </a>
-                    <a
-                      href="javascript:void(0);"
-                      className="dropdown-item d-block p-15 "
-                    >
+                    <a href="javascript:void(0);" className="dropdown-item d-block p-15">
                       <div className="d-flex">
                         <div className="avatar avatar-gold avatar-icon">
                           <UserAddOutlined />
                         </div>
                         <div className="m-l-15">
-                          <p className="m-b-0 text-dark">
-                            You have a new update
-                          </p>
-                          <p className="m-b-0">
-                            <small>2 days ago</small>
-                          </p>
+                          <p className="m-b-0 text-dark">You have a new update</p>
+                          <p className="m-b-0"><small>2 days ago</small></p>
                         </div>
                       </div>
                     </a>
@@ -144,17 +111,12 @@ const HeaderMain: React.FC = () => {
                       <img src={"/static/images/avatars/thumb-3.jpg"} alt="" />
                     </div>
                     <div className="m-l-10">
-                      <p className="m-b-0 text-dark font-weight-semibold">
-                        Marshall Nichols
-                      </p>
-                      <p className="m-b-0 opacity-07">UI/UX Desinger</p>
+                      <p className="m-b-0 text-dark font-weight-semibold">Marshall Nichols</p>
+                      <p className="m-b-0 opacity-07">UI/UX Designer</p>
                     </div>
                   </div>
                 </div>
-                <a
-                  href="javascript:void(0);"
-                  className="dropdown-item d-block p-h-15 p-v-10"
-                >
+                <a href="javascript:void(0);" className="dropdown-item d-block p-h-15 p-v-10">
                   <div className="d-flex align-items-center justify-content-between">
                     <div>
                       <UserOutlined />
@@ -163,10 +125,7 @@ const HeaderMain: React.FC = () => {
                     <RightOutlined />
                   </div>
                 </a>
-                <a
-                  href="javascript:void(0);"
-                  className="dropdown-item d-block p-h-15 p-v-10"
-                >
+                <a href="javascript:void(0);" className="dropdown-item d-block p-h-15 p-v-10">
                   <div className="d-flex align-items-center justify-content-between">
                     <div>
                       <LockOutlined />
@@ -175,10 +134,7 @@ const HeaderMain: React.FC = () => {
                     <RightOutlined />
                   </div>
                 </a>
-                <a
-                  href="javascript:void(0);"
-                  className="dropdown-item d-block p-h-15 p-v-10"
-                >
+                <a href="javascript:void(0);" className="dropdown-item d-block p-h-15 p-v-10">
                   <div className="d-flex align-items-center justify-content-between">
                     <div>
                       <ProjectOutlined />
@@ -187,27 +143,20 @@ const HeaderMain: React.FC = () => {
                     <RightOutlined />
                   </div>
                 </a>
-                <a
-                  href="javascript:void(0);"
-                  className="dropdown-item d-block p-h-15 p-v-10"
-                >
-                  <a href="/" className="log-out-button">
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div>
-                        <LogoutOutlined />
-                        <span className="m-l-10">Logout</span>
-                      </div>
+                <a href="/" className="dropdown-item d-block p-h-15 p-v-10 log-out-button">
+                  <div className="d-flex align-items-center justify-content-between">
+                    <div>
+                      <LogoutOutlined />
+                      <span className="m-l-10">Logout</span>
                     </div>
-                  </a>
+                  </div>
                 </a>
               </div>
             </li>
-
           </ul>
         </div>
       </div>
     </div>
-
   );
 };
 

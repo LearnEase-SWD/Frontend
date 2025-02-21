@@ -6,12 +6,15 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 
-const DashboardAdmin = () => {
+interface DashboardAdminProps {
+  isFolded: boolean;
+}
 
+const DashboardAdmin: React.FC<DashboardAdminProps> = ({ isFolded }) => {
 
   return (
     <div className="page-container">
-      <div className="main-content">
+      <div className={`main-content ${isFolded ? "is-folded" : ""}`}>
         <div className="row">
           <div className="col-md-6 col-lg-3">
             <div className="card">
