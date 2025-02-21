@@ -1,4 +1,3 @@
-
 import {
   DollarOutlined,
   LineChartOutlined,
@@ -6,15 +5,10 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 
-interface DashboardAdminProps {
-  isFolded: boolean;
-}
-
-const DashboardAdmin: React.FC<DashboardAdminProps> = ({ isFolded }) => {
-
+const DashboardAdmin = () => {
   return (
     <div className="page-container">
-      <div className={`main-content ${isFolded ? "is-folded" : ""}`}>
+      <div className="main-content">
         <div className="row">
           <div className="col-md-6 col-lg-3">
             <div className="card">
@@ -218,7 +212,6 @@ const DashboardAdmin: React.FC<DashboardAdminProps> = ({ isFolded }) => {
                         <tr>
                           <td>
                             <div className="media align-items-center">
-
                               <div className="m-l-10">
                                 <span>Gray Sofa</span>
                               </div>
@@ -241,7 +234,6 @@ const DashboardAdmin: React.FC<DashboardAdminProps> = ({ isFolded }) => {
                         <tr>
                           <td>
                             <div className="media align-items-center">
-
                               <div className="m-l-10">
                                 <span>Wooden Rhino</span>
                               </div>
@@ -264,7 +256,6 @@ const DashboardAdmin: React.FC<DashboardAdminProps> = ({ isFolded }) => {
                         <tr>
                           <td>
                             <div className="media align-items-center">
-
                               <div className="m-l-10">
                                 <span>Red Chair</span>
                               </div>
@@ -287,7 +278,6 @@ const DashboardAdmin: React.FC<DashboardAdminProps> = ({ isFolded }) => {
                         <tr>
                           <td>
                             <div className="media align-items-center">
-
                               <div className="m-l-10">
                                 <span>Wristband</span>
                               </div>
