@@ -1,13 +1,18 @@
 import { AppstoreOutlined, BuildOutlined, DashboardOutlined, FileOutlined, FormOutlined, HddOutlined, LockOutlined, PieChartOutlined, TableOutlined } from "@ant-design/icons";
 
-const SidebarAdmin: React.FC = () => {
+interface SidebarAdminProps {
+  isFolded: boolean;
+  toggleSidebar: () => void;
+}
+
+const SidebarAdmin: React.FC<SidebarAdminProps> = ({ isFolded }) =>  {
   return (
-    <div className="sidebar-main">
+    <div className={`sidebar-main ${isFolded ? "is-folded" : ""}`}>
       <div className="side-nav">
         <div className="side-nav-inner">
           <ul className="side-nav-menu scrollable">
             <li className="nav-item dropdown open">
-              <a className="dropdown-toggle" href="javascript:void(0);">
+              <a className="dropdown-toggle">
                 <span className="icon-holder">
                 <DashboardOutlined />
                 </span>
