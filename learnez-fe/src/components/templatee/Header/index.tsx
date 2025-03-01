@@ -23,12 +23,12 @@ const HeaderMain: React.FC<HeaderMainProps> = ({ isFolded, toggleSidebar }) => {
         <div className="nav-wrap">
           <ul className="nav-left">
             <li className="desktop-toggle">
-              <a onClick={toggleSidebar}>
+              <a onPointerDown={toggleSidebar} >
                 {isFolded ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               </a>
             </li>
             <li className="mobile-toggle">
-              <a onClick={toggleSidebar}>
+              <a onPointerDown={toggleSidebar}>
                 {isFolded ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               </a>
             </li>
