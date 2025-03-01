@@ -16,7 +16,7 @@ const LayoutAdmin: React.FC = () => {
         <div className="layout">
           <SidebarAdmin isFolded={isFolded} toggleSidebar={toggleSidebar} />
           <HeaderMain isFolded={isFolded} toggleSidebar={toggleSidebar} />
-          <DashboardAdmin isFolded={isFolded} />
+          <DashboardAdmin />
         </div>
       </div>
     </>
