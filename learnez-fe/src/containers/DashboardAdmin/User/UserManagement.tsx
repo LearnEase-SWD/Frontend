@@ -1,82 +1,47 @@
 import {
-  DollarOutlined,
-  LineChartOutlined,
-  ProfileOutlined,
-  UserOutlined,
+  ArrowRightOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  PlusOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
-
-const DashboardAdmin = () => {
+import "./index.scss";
+const UserManagement = () => {
   return (
     <div className="page-container">
       <div className="main-content">
-        <div className="row">
-          <div className="col-md-6 col-lg-3">
-            <div className="card">
-              <div className="card-body">
-                <div className="media align-items-center">
-                  <div className="avatar avatar-icon avatar-lg avatar-blue">
-                    <DollarOutlined />
-                  </div>
-                  <div className="m-l-15">
-                    <h2 className="m-b-0">$23,523</h2>
-                    <p className="m-b-0 text-muted">Profit</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6 col-lg-3">
-            <div className="card">
-              <div className="card-body">
-                <div className="media align-items-center">
-                  <div className="avatar avatar-icon avatar-lg avatar-cyan">
-                    <LineChartOutlined />
-                  </div>
-                  <div className="m-l-15">
-                    <h2 className="m-b-0">+ 17.21%</h2>
-                    <p className="m-b-0 text-muted">Growth</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6 col-lg-3">
-            <div className="card">
-              <div className="card-body">
-                <div className="media align-items-center">
-                  <div className="avatar avatar-icon avatar-lg avatar-gold">
-                    <ProfileOutlined />
-                  </div>
-                  <div className="m-l-15">
-                    <h2 className="m-b-0">3,685</h2>
-                    <p className="m-b-0 text-muted">Orders</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6 col-lg-3">
-            <div className="card">
-              <div className="card-body">
-                <div className="media align-items-center">
-                  <div className="avatar avatar-icon avatar-lg avatar-purple">
-                    <UserOutlined />
-                  </div>
-                  <div className="m-l-15">
-                    <h2 className="m-b-0">1,832</h2>
-                    <p className="m-b-0 text-muted">Customers</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div className="row">
           <div className="col-md-12">
             <div className="card">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
-                  <h5>Latest Transactions</h5>
+                  <h5>User Management</h5>
+                  <div className="d-flex align-items-center col-md-3 m-b-10">
+                    <div className="input-affix m-r-10">
+                      <span className="prefix-icon">
+                        <SearchOutlined />
+                      </span>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search"
+                      />
+                      <button className="btn btn-icon btn-default">
+                        <ArrowRightOutlined />
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      className="btn btn-primary"
+                      data-toggle="modal"
+                      data-target="#create-new-project"
+                    >
+                      <PlusOutlined />
+                      <span className="m-l-5">New Account</span>
+                    </button>
+                  </div>
                 </div>
                 <div className="m-t-30">
                   <div className="table-responsive">
@@ -116,10 +81,15 @@ const DashboardAdmin = () => {
                           <td>8 May 2019</td>
                           <td>$137.00</td>
                           <td>
-                            <div className="d-flex align-items-center">
-                              <span className="badge badge-success badge-dot m-r-10"></span>
-                              <span>Approved</span>
-                            </div>
+                            <button className="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+                              <EditOutlined />
+                            </button>
+                            <button className="btn btn-icon btn-hover btn-sm btn-rounded">
+                              <EyeOutlined />
+                            </button>
+                            <button className="btn btn-icon btn-hover btn-sm btn-rounded">
+                              <DeleteOutlined />
+                            </button>
                           </td>
                         </tr>
                         <tr>
@@ -263,4 +233,4 @@ const DashboardAdmin = () => {
   );
 };
 
-export default DashboardAdmin;
+export default UserManagement;
