@@ -29353,3 +29353,27 @@ div.is-invalid {
   background-color: #de4436;
   border-color: #de4436
 }
+/* google login button  */
+.google-login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+}
+#google-login-btn {
+  gap: 10px;
+  background-color: white;
+  border: #f0f0f0 1px solid;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#google-login-btn img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+/* end google login button  */

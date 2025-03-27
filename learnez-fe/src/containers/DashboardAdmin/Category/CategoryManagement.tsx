@@ -1,82 +1,40 @@
-import {
-  DollarOutlined,
-  LineChartOutlined,
-  ProfileOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { ArrowRightOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
 
-const DashboardAdmin = () => {
+const CategoryManagement = () => {
   return (
     <div className="page-container">
       <div className="main-content">
-        <div className="row">
-          <div className="col-md-6 col-lg-3">
-            <div className="card">
-              <div className="card-body">
-                <div className="media align-items-center">
-                  <div className="avatar avatar-icon avatar-lg avatar-blue">
-                    <DollarOutlined />
-                  </div>
-                  <div className="m-l-15">
-                    <h2 className="m-b-0">$23,523</h2>
-                    <p className="m-b-0 text-muted">Profit</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6 col-lg-3">
-            <div className="card">
-              <div className="card-body">
-                <div className="media align-items-center">
-                  <div className="avatar avatar-icon avatar-lg avatar-cyan">
-                    <LineChartOutlined />
-                  </div>
-                  <div className="m-l-15">
-                    <h2 className="m-b-0">+ 17.21%</h2>
-                    <p className="m-b-0 text-muted">Growth</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6 col-lg-3">
-            <div className="card">
-              <div className="card-body">
-                <div className="media align-items-center">
-                  <div className="avatar avatar-icon avatar-lg avatar-gold">
-                    <ProfileOutlined />
-                  </div>
-                  <div className="m-l-15">
-                    <h2 className="m-b-0">3,685</h2>
-                    <p className="m-b-0 text-muted">Orders</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6 col-lg-3">
-            <div className="card">
-              <div className="card-body">
-                <div className="media align-items-center">
-                  <div className="avatar avatar-icon avatar-lg avatar-purple">
-                    <UserOutlined />
-                  </div>
-                  <div className="m-l-15">
-                    <h2 className="m-b-0">1,832</h2>
-                    <p className="m-b-0 text-muted">Customers</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div className="row">
           <div className="col-md-12">
             <div className="card">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
-                  <h5>Latest Transactions</h5>
+                  <h5>Category Management</h5>
+                  <div className="d-flex align-items-center col-md-3 m-b-10">
+                    <div className="input-affix m-r-10">
+                      <span className="prefix-icon">
+                        <SearchOutlined />
+                      </span>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search"
+                      />
+                      <button className="btn btn-icon btn-default">
+                        <ArrowRightOutlined />
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      className="btn btn-primary"
+                      data-toggle="modal"
+                      data-target="#create-new-project"
+                    >
+                      <PlusOutlined />
+                      <span className="m-l-5">New Category</span>
+                    </button>
+                  </div>
                 </div>
                 <div className="m-t-30">
                   <div className="table-responsive">
@@ -263,4 +221,4 @@ const DashboardAdmin = () => {
   );
 };
 
-export default DashboardAdmin;
+export default CategoryManagement;

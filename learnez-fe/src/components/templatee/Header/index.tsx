@@ -16,8 +16,8 @@ const HeaderMain: React.FC<HeaderMainProps> = ({ isFolded, toggleSidebar }) => {
       <div className="header">
         <div className={`logo ${isFolded ? "is-folded" : ""}`}>
           <a href="/dashboard">
-            <img src={"/static/images/logo-webapp-admin.png"} alt="Logo" />
-            <img className="logo-fold" src={"/static/images/Logo-mini.png"} alt="Logo" />
+            <img src={"/static/images/logo-web-admin.png"} alt="Logo" />
+            <img className="logo-fold" src={"/static/images/icon-web.png"} style={{height: "65px", width: "65px"}} alt="Logo" />
           </a>
         </div>
         <div className="nav-wrap">
@@ -108,41 +108,14 @@ const HeaderMain: React.FC<HeaderMainProps> = ({ isFolded, toggleSidebar }) => {
                 <div className="p-h-20 p-b-15 m-b-10 border-bottom">
                   <div className="d-flex m-r-50">
                     <div className="avatar avatar-lg avatar-image">
-                      <img src={"/static/images/avatars/thumb-3.jpg"} alt="" />
+                      <img src={"/static/images/431314300_1444305756173997_6934607628460958573_n.jpg"} alt="" />
                     </div>
                     <div className="m-l-10">
                       <p className="m-b-0 text-dark font-weight-semibold">Marshall Nichols</p>
                       <p className="m-b-0 opacity-07">UI/UX Designer</p>
                     </div>
                   </div>
-                </div>
-                <a href="javascript:void(0);" className="dropdown-item d-block p-h-15 p-v-10">
-                  <div className="d-flex align-items-center justify-content-between">
-                    <div>
-                      <UserOutlined />
-                      <span className="m-l-10">Edit Profile</span>
-                    </div>
-                    <RightOutlined />
-                  </div>
-                </a>
-                <a href="javascript:void(0);" className="dropdown-item d-block p-h-15 p-v-10">
-                  <div className="d-flex align-items-center justify-content-between">
-                    <div>
-                      <LockOutlined />
-                      <span className="m-l-10">Account Setting</span>
-                    </div>
-                    <RightOutlined />
-                  </div>
-                </a>
-                <a href="javascript:void(0);" className="dropdown-item d-block p-h-15 p-v-10">
-                  <div className="d-flex align-items-center justify-content-between">
-                    <div>
-                      <ProjectOutlined />
-                      <span className="m-l-10">Projects</span>
-                    </div>
-                    <RightOutlined />
-                  </div>
-                </a>
+                </div>                
                 <a href="/" className="dropdown-item d-block p-h-15 p-v-10 log-out-button">
                   <div className="d-flex align-items-center justify-content-between">
                     <div>
