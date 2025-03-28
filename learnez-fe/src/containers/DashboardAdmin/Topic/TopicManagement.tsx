@@ -1,6 +1,33 @@
-import { ArrowRightOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import { ArrowRightOutlined, PlusOutlined, SearchOutlined, UploadOutlined } from "@ant-design/icons";
+import { Button, Modal, Upload, UploadFile, UploadProps } from "antd";
+import React, { useState } from "react";
+import { API_UPLOAD_FILE } from "../../../constants/upload";
 
-const CategoryManagement = () => {
+
+const TopicManagement = () => {
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
+  
+  const handleImageChange: UploadProps["onChange"] = ({
+    fileList: newFileList,
+  }) => {
+    setFileList(newFileList);
+
+    if (newFileList.length > 0 && newFileList[0].status === "done") {
+      const uploadedImageUrl = newFileList[0].response?.secure_url;
+      console.log("image url:", uploadedImageUrl);
+    } else if (newFileList.length === 0 || newFileList[0].status === "error") {
+      console.error("Failed to upload image");
+    }
+  };
   return (
     <div className="page-container">
       <div className="main-content">
@@ -9,7 +36,7 @@ const CategoryManagement = () => {
             <div className="card">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
-                  <h5>Category Management</h5>
+                  <h5>Topic Management</h5>
                   <div className="d-flex align-items-center col-md-3 m-b-10">
                     <div className="input-affix m-r-10">
                       <span className="prefix-icon">
@@ -28,11 +55,10 @@ const CategoryManagement = () => {
                   <div>
                     <button
                       className="btn btn-primary"
-                      data-toggle="modal"
-                      data-target="#create-new-project"
+                      onClick={handleOpenModal}
                     >
                       <PlusOutlined />
-                      <span className="m-l-5">New Category</span>
+                      <span className="m-l-5">New Topic</span>
                     </button>
                   </div>
                 </div>
@@ -217,8 +243,29 @@ const CategoryManagement = () => {
           </div>
         </div>
       </div>
+      <Modal
+        title="Upload New Topic Image"
+        visible={isModalVisible}
+        onCancel={handleCloseModal}
+        footer={null}
+      >
+          <Upload
+            action={API_UPLOAD_FILE}
+            listType="picture-card"
+            onChange={handleImageChange}
+            fileList={fileList}
+            maxCount={1}
+          >
+            {fileList.length < 1 && (
+              <button style={{ border: 0, background: "none" }} type="button">
+                <PlusOutlined />
+                <div>Upload</div>
+              </button>
+            )}
+          </Upload>
+      </Modal>
     </div>
   );
 };
 
-export default CategoryManagement;
+export default TopicManagement;

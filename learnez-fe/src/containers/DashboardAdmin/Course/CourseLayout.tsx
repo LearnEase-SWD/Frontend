@@ -1,9 +1,44 @@
-import { PlusOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { useEffect, useState } from "react";
+import { Course } from "../../../models/Course.model";
+import { getAllCourses } from "../../../services/course.service";
+import { getAllLessons } from "../../../services/lesson.service";
+import { Lesson, LessonType } from "../../../models/Lesson.model";
 
 const CourseLayout = () => {
   const [activeTab, setActiveTab] = useState("course");
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [lessons, setLessons] = useState<Lesson[]>([]);
+  const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
+  const pageSize = 6;
+  const pageIndex = 1;
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const getCourses = await getAllCourses(pageIndex, pageSize);
+        setCourses(getCourses);
+        setFilteredCourses(getCourses);
+        console.log(getCourses);
+      } catch (error) {
+        console.error("Failed to fetch courses:", error);
+      }
+    };
+    const fetchLessons = async () => {
+      try {
+        const getLessons = await getAllLessons(1, pageSize);
+        setLessons(getLessons);
+      } catch (error) {
+        console.error("Failed to fetch lessons:", error);
+      }
+    };
+    fetchCourses();
+    fetchLessons();
+  }, []);
 
+  const getCourseNameById = (courseID: string): string => {
+    const course = courses.find((course) => course.courseID === courseID);
+    return course ? course.title : "Unknown Course";
+  };
   const renderTableContent = () => {
     switch (activeTab) {
       case "course":
@@ -13,153 +48,31 @@ const CourseLayout = () => {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Customer</th>
-                  <th>Date</th>
-                  <th>Amount</th>
-                  <th>Status</th>
+                  <th>Title</th>
+                  <th>Level</th>
+                  <th>Total Lessons</th>
+                  <th>Price</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>#5331</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="avatar avatar-image"
-                          style={{
-                            height: "30px",
-                            minWidth: "30px",
-                            maxWidth: "30px",
-                          }}
-                        >
-                          <img src="assets/images/avatars/thumb-1.jpg" alt="" />
-                        </div>
-                        <h6 className="m-l-10 m-b-0">Erin Gonzales</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>8 May 2019</td>
-                  <td>$137.00</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="badge badge-success badge-dot m-r-10"></span>
-                      <span>Approved</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#5375</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="avatar avatar-image"
-                          style={{
-                            height: "30px",
-                            minWidth: "30px",
-                            maxWidth: "30px",
-                          }}
-                        >
-                          <img src="assets/images/avatars/thumb-2.jpg" alt="" />
-                        </div>
-                        <h6 className="m-l-10 m-b-0">Darryl Day</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>6 May 2019</td>
-                  <td>$322.00</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="badge badge-success badge-dot m-r-10"></span>
-                      <span>Approved</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#5762</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="avatar avatar-image"
-                          style={{
-                            height: "30px",
-                            minWidth: "30px",
-                            maxWidth: "30px",
-                          }}
-                        >
-                          <img src="assets/images/avatars/thumb-3.jpg" alt="" />
-                        </div>
-                        <h6 className="m-l-10 m-b-0">Marshall Nichols</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>1 May 2019</td>
-                  <td>$543.00</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="badge badge-success badge-dot m-r-10"></span>
-                      <span>Approved</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#5865</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="avatar avatar-image"
-                          style={{
-                            height: "30px",
-                            minWidth: "30px",
-                            maxWidth: "30px",
-                          }}
-                        >
-                          <img src="assets/images/avatars/thumb-4.jpg" alt="" />
-                        </div>
-                        <h6 className="m-l-10 m-b-0">Virgil Gonzales</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>28 April 2019</td>
-                  <td>$876.00</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="badge badge-primary badge-dot m-r-10"></span>
-                      <span>Pending</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#5213</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="avatar avatar-image"
-                          style={{
-                            height: "30px",
-                            minWidth: "30px",
-                            maxWidth: "30px",
-                          }}
-                        >
-                          <img src="assets/images/avatars/thumb-5.jpg" alt="" />
-                        </div>
-                        <h6 className="m-l-10 m-b-0">Nicole Wyne</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>28 April 2019</td>
-                  <td>$241.00</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="badge badge-success badge-dot m-r-10"></span>
-                      <span>Approved</span>
-                    </div>
-                  </td>
-                </tr>
+                {courses.map((course) => (
+                  <tr key={course.courseID}>
+                    <td>{course.courseID}</td>
+                    <td>{course.title}</td>
+                    <td>{course.difficultyLevel}</td>
+                    <td>{course.totalLessons}</td>
+                    <td>{course.price}</td>
+                    <td>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+                        <EditOutlined />
+                      </button>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
+                        <DeleteOutlined />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -171,32 +84,18 @@ const CourseLayout = () => {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Customer</th>
-                  <th>Date</th>
-                  <th>Amount</th>
-                  <th>Status</th>
+                  <th>Title</th>
+                  <th>Level</th>
+                  <th>Total Lessons</th>
+                  <th>Price</th>
+                  <th>Created At</th>
+                  <th>Updated At</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>#5331</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="avatar avatar-image"
-                          style={{
-                            height: "30px",
-                            minWidth: "30px",
-                            maxWidth: "30px",
-                          }}
-                        >
-                          <img src="assets/images/avatars/thumb-1.jpg" alt="" />
-                        </div>
-                        <h6 className="m-l-10 m-b-0">Erin Gonzales</h6>
-                      </div>
-                    </div>
-                  </td>
+                  <td></td>
+                  <td></td>
                   <td>8 May 2019</td>
                   <td>$137.00</td>
                   <td>
@@ -329,153 +228,31 @@ const CourseLayout = () => {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Customer</th>
-                  <th>Date</th>
-                  <th>Amount</th>
-                  <th>Status</th>
+                  <th>Title</th>
+                  <th>Course Name</th>
+                  <th>Lesson Type</th>
+                  <th>Index</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>#5331</td>
+                {lessons.map((lesson) => (
+                  <tr key={lesson.lessonID}>
+                  <td>{lesson.lessonID}</td>
+                  <td>{lesson.title}</td>
+                  <td>{getCourseNameById(lesson.courseID)}</td>
+                  <td>{LessonType[lesson.lessonType] || "Unknown Type"}</td>
+                  <td>{lesson.index}</td>
                   <td>
-                    <div className="d-flex align-items-center">
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="avatar avatar-image"
-                          style={{
-                            height: "30px",
-                            minWidth: "30px",
-                            maxWidth: "30px",
-                          }}
-                        >
-                          <img src="assets/images/avatars/thumb-1.jpg" alt="" />
-                        </div>
-                        <h6 className="m-l-10 m-b-0">Erin Gonzales</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>8 May 2019</td>
-                  <td>$137.00</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="badge badge-success badge-dot m-r-10"></span>
-                      <span>Approved</span>
-                    </div>
+                    <button className="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+                      <EditOutlined />
+                    </button>
+                    <button className="btn btn-icon btn-hover btn-sm btn-rounded">
+                      <DeleteOutlined />
+                    </button>
                   </td>
                 </tr>
-                <tr>
-                  <td>#5375</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="avatar avatar-image"
-                          style={{
-                            height: "30px",
-                            minWidth: "30px",
-                            maxWidth: "30px",
-                          }}
-                        >
-                          <img src="assets/images/avatars/thumb-2.jpg" alt="" />
-                        </div>
-                        <h6 className="m-l-10 m-b-0">Darryl Day</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>6 May 2019</td>
-                  <td>$322.00</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="badge badge-success badge-dot m-r-10"></span>
-                      <span>Approved</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#5762</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="avatar avatar-image"
-                          style={{
-                            height: "30px",
-                            minWidth: "30px",
-                            maxWidth: "30px",
-                          }}
-                        >
-                          <img src="assets/images/avatars/thumb-3.jpg" alt="" />
-                        </div>
-                        <h6 className="m-l-10 m-b-0">Marshall Nichols</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>1 May 2019</td>
-                  <td>$543.00</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="badge badge-success badge-dot m-r-10"></span>
-                      <span>Approved</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#5865</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="avatar avatar-image"
-                          style={{
-                            height: "30px",
-                            minWidth: "30px",
-                            maxWidth: "30px",
-                          }}
-                        >
-                          <img src="assets/images/avatars/thumb-4.jpg" alt="" />
-                        </div>
-                        <h6 className="m-l-10 m-b-0">Virgil Gonzales</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>28 April 2019</td>
-                  <td>$876.00</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="badge badge-primary badge-dot m-r-10"></span>
-                      <span>Pending</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#5213</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="avatar avatar-image"
-                          style={{
-                            height: "30px",
-                            minWidth: "30px",
-                            maxWidth: "30px",
-                          }}
-                        >
-                          <img src="assets/images/avatars/thumb-5.jpg" alt="" />
-                        </div>
-                        <h6 className="m-l-10 m-b-0">Nicole Wyne</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>28 April 2019</td>
-                  <td>$241.00</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="badge badge-success badge-dot m-r-10"></span>
-                      <span>Approved</span>
-                    </div>
-                  </td>
-                </tr>
+                ))}
               </tbody>
             </table>
           </div>
