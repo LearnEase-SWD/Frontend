@@ -1,43 +1,103 @@
-import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { Course } from "../../../models/Course.model";
 import { getAllCourses } from "../../../services/course.service";
-import { getAllLessons } from "../../../services/lesson.service";
-import { Lesson, LessonType } from "../../../models/Lesson.model";
+import {
+  getAllExercises,
+  getAllFlashcards,
+  getAllLessons,
+  getAllTheoryLessons,
+  getAllVideoLessons,
+} from "../../../services/lesson.service";
+import {
+  Exercise,
+  Flashcard,
+  Lesson,
+  TheoryLesson,
+  VideoLesson,
+} from "../../../models/Lesson.model";
+import { Modal } from "antd";
+import CreateCourse from "./CreateCourse";
+import CreateLesson from "./CreateLesson";
+import CreateTheoryLesson from "./LessonType/CreateTheoryLesson";
+import CreateFlashcard from "./LessonType/CreateFlashcard";
+import CreateExercise from "./LessonType/CreateExercise";
+import CreateVideoLesson from "./LessonType/CreateVideoLesson";
 
 const CourseLayout = () => {
+  const [isModalCreateCourseVisible, setIsModalCreateCourseVisible] =
+    useState(false);
+  const [isModalCreateLessonVisible, setIsModalCreateLessonVisible] =
+    useState(false);
+  const [isModalCreateVideoLessonVisible, setIsModalCreateVideoLessonVisible] =
+    useState(false);
+  const [isModalCreateFlashcardVisible, setIsModalCreateFlashcardVisible] =
+    useState(false);
+  const [isModalCreateExerciseVisible, setIsModalCreateExerciseVisible] =
+    useState(false);
+  const [
+    isModalCreateTheoryLessonVisible,
+    setIsModalCreateTheoryLessonVisible,
+  ] = useState(false);
+
   const [activeTab, setActiveTab] = useState("course");
   const [courses, setCourses] = useState<Course[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
-  const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
+  const [theoryLessons, setTheoryLessons] = useState<TheoryLesson[]>([]);
+  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
+  const [videoLessons, setVideoLessons] = useState<VideoLesson[]>([]);
+
   const pageSize = 6;
-  const pageIndex = 1;
+  const fetchCourses = async () => {
+    try {
+      const getCourses = await getAllCourses(1, pageSize);
+      setCourses(getCourses);
+      console.log(getCourses);
+    } catch (error) {
+      console.error("Failed to fetch courses:", error);
+    }
+  };
+  const fetchLessons = async () => {
+    try {
+      const getLessons = await getAllLessons(1, pageSize);
+      setLessons(getLessons);
+    } catch (error) {
+      console.error("Failed to fetch lessons:", error);
+    }
+  };
+  const fetchLessonType = async () => {
+    try {
+      const getTheoryLessons = await getAllTheoryLessons(1, pageSize);
+      const getExercises = await getAllExercises(1, pageSize);
+      const getFlashcards = await getAllFlashcards(1, pageSize);
+      const getVideoLessons = await getAllVideoLessons(1, pageSize);
+      setTheoryLessons(getTheoryLessons);
+      setExercises(getExercises);
+      setFlashcards(getFlashcards);
+      setVideoLessons(getVideoLessons);
+    } catch (error) {
+      console.error("Failed to fetch theory lessons:", error);
+    }
+  };
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const getCourses = await getAllCourses(pageIndex, pageSize);
-        setCourses(getCourses);
-        setFilteredCourses(getCourses);
-        console.log(getCourses);
-      } catch (error) {
-        console.error("Failed to fetch courses:", error);
-      }
-    };
-    const fetchLessons = async () => {
-      try {
-        const getLessons = await getAllLessons(1, pageSize);
-        setLessons(getLessons);
-      } catch (error) {
-        console.error("Failed to fetch lessons:", error);
-      }
-    };
     fetchCourses();
     fetchLessons();
+    fetchLessonType();
   }, []);
 
-  const getCourseNameById = (courseID: string): string => {
+  const getCourseTitleById = (courseID: string): string => {
     const course = courses.find((course) => course.courseID === courseID);
     return course ? course.title : "Unknown Course";
+  };
+  const getLessonTitleById = (lessonID: string): string => {
+    const lesson = lessons.find((lesson) => lesson.lessonID === lessonID);
+    return lesson ? lesson.title : "Unknown Lesson";
   };
   const renderTableContent = () => {
     switch (activeTab) {
@@ -47,10 +107,10 @@ const CourseLayout = () => {
             <table className="table table-hover">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Title</th>
+                  <th>Course Name</th>
+                  <th>Topic</th>
                   <th>Level</th>
-                  <th>Total Lessons</th>
+                  <th>Status</th>
                   <th>Price</th>
                   <th>Action</th>
                 </tr>
@@ -58,10 +118,38 @@ const CourseLayout = () => {
               <tbody>
                 {courses.map((course) => (
                   <tr key={course.courseID}>
-                    <td>{course.courseID}</td>
-                    <td>{course.title}</td>
+                    <td>
+                      <div className="d-flex align-items-center">
+                        <div className="d-flex align-items-center">
+                          <div
+                            className="avatar avatar-image"
+                            style={{
+                              height: "30px",
+                              minWidth: "30px",
+                              maxWidth: "30px",
+                            }}
+                          >
+                            <img src={course.url} alt="" />
+                          </div>
+                          <p className="m-l-10 m-b-0">{course.title}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>{course.topicName}</td>
                     <td>{course.difficultyLevel}</td>
-                    <td>{course.totalLessons}</td>
+                    <td>
+                      {course.status === "Available" ? (
+                        <>
+                          <span className="badge badge-success badge-dot m-r-10"></span>
+                          <span>Available</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="badge badge-danger badge-dot m-r-10"></span>
+                          <span>No Available</span>
+                        </>
+                      )}
+                    </td>
                     <td>{course.price}</td>
                     <td>
                       <button className="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
@@ -77,146 +165,91 @@ const CourseLayout = () => {
             </table>
           </div>
         );
-      case "session":
+      case "lessionType":
         return (
           <div className="table-responsive">
             <table className="table table-hover">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Title</th>
-                  <th>Level</th>
-                  <th>Total Lessons</th>
-                  <th>Price</th>
+                  <th>Lesson Name</th>
+                  <th>Lesson Type</th>
                   <th>Created At</th>
-                  <th>Updated At</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td>8 May 2019</td>
-                  <td>$137.00</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="badge badge-success badge-dot m-r-10"></span>
-                      <span>Approved</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#5375</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="avatar avatar-image"
-                          style={{
-                            height: "30px",
-                            minWidth: "30px",
-                            maxWidth: "30px",
-                          }}
-                        >
-                          <img src="assets/images/avatars/thumb-2.jpg" alt="" />
-                        </div>
-                        <h6 className="m-l-10 m-b-0">Darryl Day</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>6 May 2019</td>
-                  <td>$322.00</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="badge badge-success badge-dot m-r-10"></span>
-                      <span>Approved</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#5762</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="avatar avatar-image"
-                          style={{
-                            height: "30px",
-                            minWidth: "30px",
-                            maxWidth: "30px",
-                          }}
-                        >
-                          <img src="assets/images/avatars/thumb-3.jpg" alt="" />
-                        </div>
-                        <h6 className="m-l-10 m-b-0">Marshall Nichols</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>1 May 2019</td>
-                  <td>$543.00</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="badge badge-success badge-dot m-r-10"></span>
-                      <span>Approved</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#5865</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="avatar avatar-image"
-                          style={{
-                            height: "30px",
-                            minWidth: "30px",
-                            maxWidth: "30px",
-                          }}
-                        >
-                          <img src="assets/images/avatars/thumb-4.jpg" alt="" />
-                        </div>
-                        <h6 className="m-l-10 m-b-0">Virgil Gonzales</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>28 April 2019</td>
-                  <td>$876.00</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="badge badge-primary badge-dot m-r-10"></span>
-                      <span>Pending</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>#5213</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="avatar avatar-image"
-                          style={{
-                            height: "30px",
-                            minWidth: "30px",
-                            maxWidth: "30px",
-                          }}
-                        >
-                          <img src="assets/images/avatars/thumb-5.jpg" alt="" />
-                        </div>
-                        <h6 className="m-l-10 m-b-0">Nicole Wyne</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>28 April 2019</td>
-                  <td>$241.00</td>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <span className="badge badge-success badge-dot m-r-10"></span>
-                      <span>Approved</span>
-                    </div>
-                  </td>
-                </tr>
+                {theoryLessons.map((theory) => (
+                  <tr key={theory.theoryID}>
+                    <td>{getLessonTitleById(theory.lessonID)}</td>
+                    <td>Theory</td>
+                    <td>{theory.createdAt}</td>
+                    <td>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+                        <EditOutlined />
+                      </button>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
+                        <EyeOutlined />
+                      </button>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
+                        <DeleteOutlined />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+                {exercises.map((exercise) => (
+                  <tr key={exercise.exerciseID}>
+                    <td>{getLessonTitleById(exercise.lessonID)}</td>
+                    <td>Exercise</td>
+                    <td>{exercise.createdAt}</td>
+                    <td>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+                        <EditOutlined />
+                      </button>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
+                        <EyeOutlined />
+                      </button>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
+                        <DeleteOutlined />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+                {flashcards.map((flashcard) => (
+                  <tr key={flashcard.flashcardID}>
+                    <td>{getLessonTitleById(flashcard.lessonID)}</td>
+                    <td>Flashcard</td>
+                    <td>{flashcard.createdAt}</td>
+                    <td>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+                        <EditOutlined />
+                      </button>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
+                        <EyeOutlined />
+                      </button>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
+                        <DeleteOutlined />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+                {videoLessons.map((videoLesson) => (
+                  <tr key={videoLesson.videoID}>
+                    <td>{getLessonTitleById(videoLesson.lessonID)}</td>
+                    <td>Video</td>
+                    <td>{videoLesson.createdAt}</td>
+                    <td>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+                        <EditOutlined />
+                      </button>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
+                        <EyeOutlined />
+                      </button>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
+                        <DeleteOutlined />
+                      </button>
+                    </td>
+                  </tr>
+                ))}              
               </tbody>
             </table>
           </div>
@@ -227,10 +260,8 @@ const CourseLayout = () => {
             <table className="table table-hover">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Title</th>
+                  <th>Lesson Name</th>
                   <th>Course Name</th>
-                  <th>Lesson Type</th>
                   <th>Index</th>
                   <th>Action</th>
                 </tr>
@@ -238,20 +269,18 @@ const CourseLayout = () => {
               <tbody>
                 {lessons.map((lesson) => (
                   <tr key={lesson.lessonID}>
-                  <td>{lesson.lessonID}</td>
-                  <td>{lesson.title}</td>
-                  <td>{getCourseNameById(lesson.courseID)}</td>
-                  <td>{LessonType[lesson.lessonType] || "Unknown Type"}</td>
-                  <td>{lesson.index}</td>
-                  <td>
-                    <button className="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
-                      <EditOutlined />
-                    </button>
-                    <button className="btn btn-icon btn-hover btn-sm btn-rounded">
-                      <DeleteOutlined />
-                    </button>
-                  </td>
-                </tr>
+                    <td>{lesson.title}</td>
+                    <td>{getCourseTitleById(lesson.courseID)}</td>
+                    <td>{lesson.index}</td>
+                    <td>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+                        <EditOutlined />
+                      </button>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
+                        <DeleteOutlined />
+                      </button>
+                    </td>
+                  </tr>
                 ))}
               </tbody>
             </table>
@@ -266,22 +295,53 @@ const CourseLayout = () => {
     switch (activeTab) {
       case "course":
         return (
-          <button className="btn btn-primary">
+          <button
+            className="btn btn-primary"
+            onClick={() => setIsModalCreateCourseVisible(true)}
+          >
             <PlusOutlined />
             <span className="m-l-5"> Add Course</span>
           </button>
         );
-      case "session":
+      case "lessionType":
         return (
-          <button className="btn btn-primary">
-            {" "}
-            <PlusOutlined />
-            <span className="m-l-5"> Add Session</span>
-          </button>
+          <>
+            <button
+              className="btn btn-primary m-r-10"
+              onClick={() => setIsModalCreateVideoLessonVisible(true)}
+            >
+              <PlusOutlined />
+              <span className="m-l-5"> Video Lesson</span>
+            </button>
+            <button
+              className="btn btn-primary m-r-10"
+              onClick={() => setIsModalCreateTheoryLessonVisible(true)}
+            >
+              <PlusOutlined />
+              <span className="m-l-5"> Theory Lesson</span>
+            </button>
+            <button
+              className="btn btn-primary m-r-10"
+              onClick={() => setIsModalCreateExerciseVisible(true)}
+            >
+              <PlusOutlined />
+              <span className="m-l-5"> Exercise</span>
+            </button>
+            <button
+              className="btn btn-primary m-r-10"
+              onClick={() => setIsModalCreateFlashcardVisible(true)}
+            >
+              <PlusOutlined />
+              <span className="m-l-5"> Flashcard</span>
+            </button>
+          </>
         );
       case "lesson":
         return (
-          <button className="btn btn-primary">
+          <button
+            className="btn btn-primary"
+            onClick={() => setIsModalCreateLessonVisible(true)}
+          >
             {" "}
             <PlusOutlined />
             <span className="m-l-5"> Add Lesson</span>
@@ -315,23 +375,23 @@ const CourseLayout = () => {
                     <li className="nav-item">
                       <a
                         className={`nav-link ${
-                          activeTab === "session" ? "active" : ""
-                        }`}
-                        style={{ cursor: "pointer" }}
-                        onClick={() => setActiveTab("session")}
-                      >
-                        Session
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a
-                        className={`nav-link ${
                           activeTab === "lesson" ? "active" : ""
                         }`}
                         style={{ cursor: "pointer" }}
                         onClick={() => setActiveTab("lesson")}
                       >
                         Lesson
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        className={`nav-link ${
+                          activeTab === "lessionType" ? "active" : ""
+                        }`}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => setActiveTab("lessionType")}
+                      >
+                        Lesson Type
                       </a>
                     </li>
                   </ul>
@@ -343,6 +403,84 @@ const CourseLayout = () => {
           </div>
         </div>
       </div>
+      <Modal
+        title="Create Course"
+        open={isModalCreateCourseVisible}
+        onCancel={() => setIsModalCreateCourseVisible(false)}
+        footer={null}
+      >
+        <CreateCourse
+          onSuccess={() => {
+            setIsModalCreateCourseVisible(false);
+            fetchCourses();
+          }}
+        />
+      </Modal>
+      <Modal
+        title="Create Lesson"
+        open={isModalCreateLessonVisible}
+        onCancel={() => setIsModalCreateLessonVisible(false)}
+        footer={null}
+      >
+        <CreateLesson
+          onSuccess={() => {
+            setIsModalCreateLessonVisible(false);
+            fetchLessons();
+          }}
+        />
+      </Modal>
+      <Modal
+        title="Create Theory Lesson"
+        open={isModalCreateTheoryLessonVisible}
+        onCancel={() => setIsModalCreateTheoryLessonVisible(false)}
+        footer={null}
+      >
+        <CreateTheoryLesson
+          onSuccess={() => {
+            setIsModalCreateTheoryLessonVisible(false);
+            fetchLessonType();
+          }}
+        />
+      </Modal>
+      <Modal
+        title="Create Flashcard"
+        open={isModalCreateFlashcardVisible}
+        onCancel={() => setIsModalCreateFlashcardVisible(false)}
+        footer={null}
+      >
+        <CreateFlashcard
+          onSuccess={() => {
+            setIsModalCreateFlashcardVisible(false);
+            fetchLessonType();
+          }}
+        />
+      </Modal>
+      <Modal
+        title="Create Exercise"
+        open={isModalCreateExerciseVisible}
+        onCancel={() => setIsModalCreateExerciseVisible(false)}
+        footer={null}
+      >
+        <CreateExercise
+          onSuccess={() => {
+            setIsModalCreateExerciseVisible(false);
+            fetchLessonType();
+          }}
+        />
+      </Modal>
+      <Modal
+        title="Create Video Lesson"
+        open={isModalCreateVideoLessonVisible}
+        onCancel={() => setIsModalCreateVideoLessonVisible(false)}
+        footer={null}
+      >
+        <CreateVideoLesson
+          onSuccess={() => {
+            setIsModalCreateVideoLessonVisible(false);
+            fetchLessonType();
+          }}
+        />
+      </Modal>
     </div>
   );
 };

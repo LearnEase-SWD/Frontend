@@ -38,33 +38,26 @@ const SidebarAdmin: React.FC<SidebarAdminProps> = ({ isFolded }) => {
                 </span>
               </a>
               <ul className="dropdown-menu">
-                <li className={isActive("/dashboard") ? "active" : ""}>
-                  <Link to="/dashboard">Default</Link>
+                <li className={isActive("/callback") ? "active" : ""}>
+                  <Link to="/callback">Default</Link>
                 </li>
-                <li className={isActive("/dashboard/users") ? "active" : ""}>
-                  <Link to="/dashboard/users">Users</Link>
+                <li className={isActive("/callback/users") ? "active" : ""}>
+                  <Link to="/callback/users">Users</Link>
                 </li>
-                <li className={isActive("/dashboard/orders") ? "active" : ""}>
-                  <Link to="/dashboard/orders">Orders</Link>
-                </li>
-                <li
-                  className={isActive("/dashboard/topics") ? "active" : ""}
-                >
-                  <Link to="/dashboard/topics">Topics</Link>
+                <li className={isActive("/callback/orders") ? "active" : ""}>
+                  <Link to="/callback/orders">Orders</Link>
                 </li>
                 <li
-                  className={
-                    isActive("/dashboard/courseLayout") ? "active" : ""
-                  }
+                  className={isActive("/callback/topics") ? "active" : ""}
                 >
-                  <Link to="/dashboard/courseLayout">Courses</Link>
+                  <Link to="/callback/topics">Topics</Link>
                 </li>
                 <li
                   className={
-                    isActive("/dashboard/aiboxchat") ? "active" : ""
+                    isActive("/callback/courseLayout") ? "active" : ""
                   }
                 >
-                  <Link to="/dashboard/aiboxchat">AI Chat</Link>
+                  <Link to="/callback/courseLayout">Courses</Link>
                 </li>
               </ul>
             </li>
