@@ -28994,14 +28994,20 @@ div.is-invalid {
   position: relative
 }
 
-.chat .conversation .conversation-wrapper .conversation-body .msg .bubble .bubble-wrapper {
+.chat .conversation .conversation-wrapper .msg .bubble .bubble-wrapper {
   padding: 10px 15px;
   border-radius: 4px;
   overflow: hidden;
   border-radius: 10px;
   margin-bottom: 10px
 }
-
+.conversation-body {
+  padding: 10px 15px;
+  border-radius: 4px;
+  overflow: scroll;
+  border-radius: 10px;
+  margin-bottom: 10px
+}
 .chat .conversation .conversation-wrapper .conversation-body .msg.datetime {
   padding: 15px 0;
   margin-bottom: 0px;

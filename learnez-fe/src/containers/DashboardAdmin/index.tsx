@@ -4,8 +4,13 @@ import {
   ProfileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { useEffect } from "react";
+import { handleAccessToken } from "../../services/auth.service";
 
 const DashboardAdmin = () => {
+  useEffect(() => {
+    handleAccessToken();
+  }, []);
   return (
     <div className="page-container">
       <div className="main-content">

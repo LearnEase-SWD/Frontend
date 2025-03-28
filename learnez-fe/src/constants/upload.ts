@@ -1,0 +1,1 @@
+export const API_UPLOAD_FILE = "https://api.cloudinary.com/v1_1/dgoib6ej1/upload?upload_preset=Learn_ease_cloudinary";

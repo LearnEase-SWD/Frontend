@@ -12,8 +12,9 @@ import ErrorPage from "./pages/ErrorPage";
 import UserManagement from "./containers/DashboardAdmin/User/UserManagement";
 import DashboardAdmin from "./containers/DashboardAdmin";
 import OrderManagement from "./containers/DashboardAdmin/Order/OrderManagement";
-import CategoryManagement from "./containers/DashboardAdmin/Category/CategoryManagement";
 import CourseLayout from "./containers/DashboardAdmin/Course/CourseLayout";
+import AIBoxChat from "./containers/DashboardAdmin/AIBoxChat";
+import TopicManagement from "./containers/DashboardAdmin/Topic/TopicManagement";
 
 const router = createBrowserRouter([
   {
@@ -48,10 +49,12 @@ function App() {
               <Route index element={<DashboardAdmin />} />
               <Route path="users" element={<UserManagement />} />
               <Route path="orders" element={<OrderManagement />} />
-              <Route path="categories" element={<CategoryManagement />} />
+              <Route path="topics" element={<TopicManagement />} />
               <Route path="courseLayout" element={<CourseLayout />} />
+              <Route path="aiboxchat" element={<AIBoxChat />} />
             </Route>
           </Route>
+          <Route path="/" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -48,9 +48,9 @@ const SidebarAdmin: React.FC<SidebarAdminProps> = ({ isFolded }) => {
                   <Link to="/dashboard/orders">Orders</Link>
                 </li>
                 <li
-                  className={isActive("/dashboard/categories") ? "active" : ""}
+                  className={isActive("/dashboard/topics") ? "active" : ""}
                 >
-                  <Link to="/dashboard/categories">Categories</Link>
+                  <Link to="/dashboard/topics">Topics</Link>
                 </li>
                 <li
                   className={
@@ -58,6 +58,13 @@ const SidebarAdmin: React.FC<SidebarAdminProps> = ({ isFolded }) => {
                   }
                 >
                   <Link to="/dashboard/courseLayout">Courses</Link>
+                </li>
+                <li
+                  className={
+                    isActive("/dashboard/aiboxchat") ? "active" : ""
+                  }
+                >
+                  <Link to="/dashboard/aiboxchat">AI Chat</Link>
                 </li>
               </ul>
             </li>
