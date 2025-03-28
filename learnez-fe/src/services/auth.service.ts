@@ -14,21 +14,18 @@ export const handleLogin = async () => {
 export const handleAccessToken = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const userEmail = urlParams.get("userEmail");
-  const userName = urlParams.get("userName");
-
-  if (userEmail && userName) {
+  console.log(window.location.search);
+  if (userEmail) {
     // Save accessToken to localStorage
     localStorage.setItem("userEmail", userEmail);
-    localStorage.setItem("userName", userName);
 
     // Remove query parameters from URL
-    const newUrl = `${window.location.origin}/dashboard`;
+    const newUrl = `${window.location.origin}/callback`;
     window.history.replaceState({}, document.title, newUrl);
   }
 };
 
 export const handleLogout = () => {
   localStorage.removeItem("userEmail");
-  localStorage.removeItem("userName");
   window.location.href = "/";
 }

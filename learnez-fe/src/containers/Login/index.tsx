@@ -1,4 +1,4 @@
-import { handleLogin } from "../../services/auth.service";
+import {  handleLogin } from "../../services/auth.service";
 import "./index.scss";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 

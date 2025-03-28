@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { User } from "../../../models/User.model";
 import { getUserbyEmail } from "../../../services/user.service";
 import { handleLogout } from "../../../services/auth.service";
+import debounce from "lodash/debounce";
 interface HeaderMainProps {
   isFolded: boolean;
   toggleSidebar: () => void;
@@ -19,25 +20,23 @@ interface HeaderMainProps {
 const HeaderMain: React.FC<HeaderMainProps> = ({ isFolded, toggleSidebar }) => {
   const [user, setUser] = useState<User | null>();
   useEffect(() => {
-    const userEmail = localStorage.getItem("userEmail");
-    const userName = localStorage.getItem("userName");
-    if (userEmail && userName) {
+    const fetchUser = debounce(async () => {
       try {
-        const fetchUser = async () => {
-          try {
-            const userInfo = await getUserbyEmail(userEmail);
-            setUser(userInfo);
-            console.log(userInfo);
-          } catch (error) {
-            console.error("Failed to fetch user:", error);
-          }
-        };
-
-        fetchUser();
+        const userEmail = localStorage.getItem("userEmail");
+        if (userEmail) {
+          const userInfo = await getUserbyEmail(userEmail);
+          setUser(userInfo);
+        }
       } catch (error) {
-        console.error("Failed to decode token:", error);
+        console.error("Failed to fetch user:", error);
       }
-    }
+    }, 300); // Debounce with a 300ms delay
+
+    fetchUser();
+
+    return () => {
+      (fetchUser as any).cancel(); // Cleanup debounce on unmount
+    };
   }, []);
 
   return (
@@ -172,17 +171,36 @@ const HeaderMain: React.FC<HeaderMainProps> = ({ isFolded, toggleSidebar }) => {
                 <div className="p-h-20 p-b-15 m-b-10 border-bottom">
                   <div className="d-flex m-r-50">
                     <div className="avatar avatar-lg avatar-image">
-                      <iframe
-                        src={user?.imageUrl || ""}
-                        title="User Avatar"
-                        style={{
-                          width: "100px",
-                          height: "100px",
-                          border: "none",
-                        }}
-                      >
-                        <p>Image could not be loaded</p>
-                      </iframe>
+                      {user?.imageUrl ? (
+                        <>
+                          <iframe
+                            src={user.imageUrl}
+                            title="User Avatar"
+                            style={{
+                              width: "100px",
+                              height: "100px",
+                              border: "none",
+                            }}
+                          >
+                            <p>Image could not be loaded</p>
+                          </iframe>
+                          <img src={user.imageUrl} alt="User Avatar" />
+                        </>
+                      ) : (
+                        <div
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            backgroundColor: "#f0f0f0",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            borderRadius: "50%",
+                          }}
+                        >
+                          <span>No Image</span>
+                        </div>
+                      )}
                     </div>
                     <div className="m-l-10">
                       <p className="m-b-0 text-dark font-weight-semibold">

@@ -2,8 +2,6 @@ import {
   ArrowRightOutlined,
   DeleteOutlined,
   EditOutlined,
-  EyeOutlined,
-  PlusOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import "./index.scss";
@@ -11,8 +9,8 @@ import { useEffect, useState } from "react";
 import { User } from "../../../models/User.model";
 import { getAllUsers } from "../../../services/user.service";
 const UserManagement = () => {
-  const [users, setUsers] = useState<User[]>([]); 
-  const [searchTerm, setSearchTerm] = useState(""); 
+  const [users, setUsers] = useState<User[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const pageSize = 6;
   const pageIndex = 1;
@@ -20,7 +18,7 @@ const UserManagement = () => {
     const fetchUsers = async () => {
       try {
         const getUsers = await getAllUsers(pageIndex, pageSize);
-        setUsers(getUsers); 
+        setUsers(getUsers);
         setFilteredUsers(getUsers);
         console.log(getUsers);
       } catch (error) {
@@ -74,7 +72,6 @@ const UserManagement = () => {
                       <table className="table table-hover">
                         <thead>
                           <tr>
-                            <th>ID</th>
                             <th>Fullname</th>
                             <th>Email</th>
                             <th>Role</th>
@@ -85,29 +82,7 @@ const UserManagement = () => {
                         <tbody>
                           {filteredUsers.map((user) => (
                             <tr key={user.userId}>
-                              <td>{user.userId}</td>
-                              <td>
-                                <div className="d-flex align-items-center">
-                                  <div className="d-flex align-items-center">
-                                    <div
-                                      className="avatar avatar-image"
-                                      style={{
-                                        height: "30px",
-                                        minWidth: "30px",
-                                        maxWidth: "30px",
-                                      }}
-                                    >
-                                      <iframe
-                                        src={user?.imageUrl || ""}
-                                        title="User Avatar"
-                                      ></iframe>
-                                    </div>
-                                    <h6 className="m-l-10 m-b-0">
-                                      {user.userName}
-                                    </h6>
-                                  </div>
-                                </div>
-                              </td>
+                              <td>{user.userName}</td>
                               <td>{user.email}</td>
                               <td>{user.role === 1 ? "User" : "Admin"}</td>
                               <td>
