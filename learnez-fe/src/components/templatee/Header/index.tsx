@@ -18,7 +18,7 @@ interface HeaderMainProps {
 }
 
 const HeaderMain: React.FC<HeaderMainProps> = ({ isFolded, toggleSidebar }) => {
-  const [user, setUser] = useState<User | null>();
+  const [user, setUser] = useState<User>();
   useEffect(() => {
     const fetchUser = debounce(async () => {
       try {
@@ -26,6 +26,7 @@ const HeaderMain: React.FC<HeaderMainProps> = ({ isFolded, toggleSidebar }) => {
         if (userEmail) {
           const userInfo = await getUserbyEmail(userEmail);
           setUser(userInfo);
+          console.log(userInfo);
         }
       } catch (error) {
         console.error("Failed to fetch user:", error);
@@ -43,7 +44,7 @@ const HeaderMain: React.FC<HeaderMainProps> = ({ isFolded, toggleSidebar }) => {
     <div className={`header-main ${isFolded ? "is-folded" : ""}`}>
       <div className="header">
         <div className={`logo ${isFolded ? "is-folded" : ""}`}>
-          <a href="/dashboard">
+          <a href="/callback">
             <img src={"/static/images/logo-web-admin.png"} alt="Logo" />
             <img
               className="logo-fold"
@@ -67,7 +68,7 @@ const HeaderMain: React.FC<HeaderMainProps> = ({ isFolded, toggleSidebar }) => {
             </li>
           </ul>
           <ul className="nav-right">
-            <li className="dropdown dropdown-animated scale-left">
+            {/* <li className="dropdown dropdown-animated scale-left">
               <a href="javascript:void(0);" data-toggle="dropdown">
                 <BellOutlined />
               </a>
@@ -160,7 +161,7 @@ const HeaderMain: React.FC<HeaderMainProps> = ({ isFolded, toggleSidebar }) => {
                   </div>
                 </div>
               </div>
-            </li>
+            </li> */}
             <li className="dropdown dropdown-animated scale-left">
               <div className="pointer" data-toggle="dropdown">
                 <div className="avatar avatar-image  m-h-10 m-r-15">
@@ -171,36 +172,16 @@ const HeaderMain: React.FC<HeaderMainProps> = ({ isFolded, toggleSidebar }) => {
                 <div className="p-h-20 p-b-15 m-b-10 border-bottom">
                   <div className="d-flex m-r-50">
                     <div className="avatar avatar-lg avatar-image">
-                      {user?.imageUrl ? (
-                        <>
-                          <iframe
-                            src={user.imageUrl}
-                            title="User Avatar"
-                            style={{
-                              width: "100px",
-                              height: "100px",
-                              border: "none",
-                            }}
-                          >
-                            <p>Image could not be loaded</p>
-                          </iframe>
-                          <img src={user.imageUrl} alt="User Avatar" />
-                        </>
-                      ) : (
-                        <div
-                          style={{
-                            width: "100px",
-                            height: "100px",
-                            backgroundColor: "#f0f0f0",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            borderRadius: "50%",
-                          }}
-                        >
-                          <span>No Image</span>
-                        </div>
-                      )}
+                      <iframe
+                        src={user?.imageUrl}
+                        title="User Avatar"
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                          border: "none",
+                        }}
+                      >
+                      </iframe>
                     </div>
                     <div className="m-l-10">
                       <p className="m-b-0 text-dark font-weight-semibold">

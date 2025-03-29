@@ -82,7 +82,7 @@ const CreateFlashcard: React.FC<FlashcardLessonFormProps> = ({ onSuccess }) => {
 
       <Form.Item>
         <Button type="primary" htmlType="submit" block>
-          Create Theory Lesson
+          Create Flashcard
         </Button>
       </Form.Item>
     </Form>

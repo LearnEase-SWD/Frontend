@@ -4,7 +4,7 @@ import {
   EyeOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Course } from "../../../models/Course.model";
 import { getAllCourses } from "../../../services/course.service";
 import {
@@ -15,19 +15,24 @@ import {
   getAllVideoLessons,
 } from "../../../services/lesson.service";
 import {
+  AllLessonType,
   Exercise,
   Flashcard,
   Lesson,
   TheoryLesson,
   VideoLesson,
 } from "../../../models/Lesson.model";
-import { Modal } from "antd";
+import { Modal, Pagination } from "antd";
 import CreateCourse from "./CreateCourse";
 import CreateLesson from "./CreateLesson";
 import CreateTheoryLesson from "./LessonType/CreateTheoryLesson";
 import CreateFlashcard from "./LessonType/CreateFlashcard";
 import CreateExercise from "./LessonType/CreateExercise";
 import CreateVideoLesson from "./LessonType/CreateVideoLesson";
+import DetailTheoryLesson from "./LessonType/DetailTheoryLesson";
+import DetailExercise from "./LessonType/DetailExercise";
+import DetailFlashcard from "./LessonType/DetailFlashcard";
+import DetailVideoLesson from "./LessonType/DetailVideoLesson";
 
 const CourseLayout = () => {
   const [isModalCreateCourseVisible, setIsModalCreateCourseVisible] =
@@ -45,18 +50,42 @@ const CourseLayout = () => {
     setIsModalCreateTheoryLessonVisible,
   ] = useState(false);
 
+  const [
+    isModalDetailTheoryLessonVisible,
+    setIsModalDetailTheoryLessonVisible,
+  ] = useState(false);
+  const [isModalDetailExerciseVisible, setIsModalDetailExerciseVisible] =
+    useState(false);
+  const [isModalDetailFlashcardVisible, setIsModalDetailFlashcardVisible] =
+    useState(false);
+  const [isModalDetailVideoLessonVisible, setIsModalDetailVideoLessonVisible] =
+    useState(false);
+
   const [activeTab, setActiveTab] = useState("course");
   const [courses, setCourses] = useState<Course[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
-  const [theoryLessons, setTheoryLessons] = useState<TheoryLesson[]>([]);
-  const [exercises, setExercises] = useState<Exercise[]>([]);
-  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
-  const [videoLessons, setVideoLessons] = useState<VideoLesson[]>([]);
+  const [allLessonTypes, setAllLessonTypes] = useState<AllLessonType[]>([]);
+
+  const [selectedTheoryID, setSelectedTheoryID] = useState<string | null>(null);
+  const [selectedExerciseID, setSelectedExerciseID] = useState<string | null>(
+    null
+  );
+  const [selectedFlashcardID, setSelectedFlashcardID] = useState<string | null>(
+    null
+  );
+  const [selectedVideoLessonID, setSelectedVideoLessonID] = useState<
+    string | null
+  >(null);
+
+  const [currentCoursePage, setCurrentCoursePage] = useState(1);
+  const [currentLessonPage, setCurrentLessonPage] = useState(1);
+  const [currentLessonTypePage, setCurrentLessonTypePage] = useState(1);
 
   const pageSize = 6;
+
   const fetchCourses = async () => {
     try {
-      const getCourses = await getAllCourses(1, pageSize);
+      const getCourses = await getAllCourses(1, 100);
       setCourses(getCourses);
       console.log(getCourses);
     } catch (error) {
@@ -65,7 +94,7 @@ const CourseLayout = () => {
   };
   const fetchLessons = async () => {
     try {
-      const getLessons = await getAllLessons(1, pageSize);
+      const getLessons = await getAllLessons(1, 100);
       setLessons(getLessons);
     } catch (error) {
       console.error("Failed to fetch lessons:", error);
@@ -73,16 +102,16 @@ const CourseLayout = () => {
   };
   const fetchLessonType = async () => {
     try {
-      const getTheoryLessons = await getAllTheoryLessons(1, pageSize);
-      const getExercises = await getAllExercises(1, pageSize);
-      const getFlashcards = await getAllFlashcards(1, pageSize);
-      const getVideoLessons = await getAllVideoLessons(1, pageSize);
-      setTheoryLessons(getTheoryLessons);
-      setExercises(getExercises);
-      setFlashcards(getFlashcards);
-      setVideoLessons(getVideoLessons);
+      const lessonTypes = await Promise.all([
+        getAllTheoryLessons(1, 100).then((data) => ({ lessonType: 1, data })),
+        getAllExercises(1, 100).then((data) => ({ lessonType: 2, data })),
+        getAllFlashcards(1, 100).then((data) => ({ lessonType: 3, data })),
+        getAllVideoLessons(1, 100).then((data) => ({ lessonType: 0, data })),
+      ]);
+
+      setAllLessonTypes(lessonTypes.flatMap((type) => type.data));
     } catch (error) {
-      console.error("Failed to fetch theory lessons:", error);
+      console.error("Failed to fetch lessons:", error);
     }
   };
   useEffect(() => {
@@ -91,6 +120,9 @@ const CourseLayout = () => {
     fetchLessonType();
   }, []);
 
+  useEffect(() => {
+    console.log("All Lesson Types:", allLessonTypes);
+  }, [allLessonTypes]);
   const getCourseTitleById = (courseID: string): string => {
     const course = courses.find((course) => course.courseID === courseID);
     return course ? course.title : "Unknown Course";
@@ -99,6 +131,27 @@ const CourseLayout = () => {
     const lesson = lessons.find((lesson) => lesson.lessonID === lessonID);
     return lesson ? lesson.title : "Unknown Lesson";
   };
+  const paginatedCourses = courses.slice(
+    (currentCoursePage - 1) * pageSize,
+    currentCoursePage * pageSize
+  );
+  const paginatedLessons = lessons.slice(
+    (currentLessonPage - 1) * pageSize,
+    currentLessonPage * pageSize
+  );
+  const paginatedLessonTypes = useMemo(() => {
+    const startIndex = (currentLessonTypePage - 1) * pageSize;
+    const endIndex = Math.min(startIndex + pageSize, allLessonTypes.length);
+    console.log("Start Index:", startIndex, "End Index:", endIndex);
+    console.log(
+      "Current Page:",
+      currentLessonTypePage,
+      "Total Lessons:",
+      allLessonTypes.length
+    );
+    return allLessonTypes.slice(startIndex, endIndex);
+  }, [allLessonTypes, currentLessonTypePage]);
+
   const renderTableContent = () => {
     switch (activeTab) {
       case "course":
@@ -116,7 +169,7 @@ const CourseLayout = () => {
                 </tr>
               </thead>
               <tbody>
-                {courses.map((course) => (
+                {paginatedCourses.map((course) => (
                   <tr key={course.courseID}>
                     <td>
                       <div className="d-flex align-items-center">
@@ -163,6 +216,13 @@ const CourseLayout = () => {
                 ))}
               </tbody>
             </table>
+            <Pagination
+              current={currentCoursePage}
+              pageSize={pageSize}
+              total={courses.length}
+              onChange={(page) => setCurrentCoursePage(page)}
+              className="m-t-20"
+            />
           </div>
         );
       case "lessionType":
@@ -178,80 +238,82 @@ const CourseLayout = () => {
                 </tr>
               </thead>
               <tbody>
-                {theoryLessons.map((theory) => (
-                  <tr key={theory.theoryID}>
-                    <td>{getLessonTitleById(theory.lessonID)}</td>
-                    <td>Theory</td>
-                    <td>{theory.createdAt}</td>
+                {paginatedLessonTypes.map((lesson, index) => (
+                  <tr key={`${lesson.lessonID}-${index}`}>
+                    <td>{getLessonTitleById(lesson.lessonID)}</td>
                     <td>
-                      <button className="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+                      {lesson.lessonType === 0
+                        ? "Video"
+                        : lesson.lessonType === 1
+                        ? "Theory"
+                        : lesson.lessonType === 2
+                        ? "Exercise"
+                        : "Flashcard"}
+                    </td>
+                    <td>{lesson.createdAt}</td>
+                    <td>
+                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
                         <EditOutlined />
                       </button>
-                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
-                        <EyeOutlined />
-                      </button>
+                      {lesson.lessonType === 0 ? (
+                        <button
+                          className="btn btn-icon btn-hover btn-sm btn-rounded"
+                          onClick={() => {
+                            setSelectedVideoLessonID(lesson.videoID);
+                            setIsModalDetailVideoLessonVisible(true);
+                          }}
+                        >
+                          <EyeOutlined />
+                        </button>
+                      ) : lesson.lessonType === 1 ? (
+                        <button
+                          className="btn btn-icon btn-hover btn-sm btn-rounded"
+                          onClick={() => {
+                            setSelectedTheoryID(lesson.theoryID);
+                            setIsModalDetailTheoryLessonVisible(true);
+                          }}
+                        >
+                          <EyeOutlined />
+                        </button>
+                      ) : lesson.lessonType === 2 ? (
+                        <button
+                          className="btn btn-icon btn-hover btn-sm btn-rounded"
+                          onClick={() => {
+                            setSelectedExerciseID(lesson.exerciseID);
+                            setIsModalDetailExerciseVisible(true);
+                          }}
+                        >
+                          <EyeOutlined />
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-icon btn-hover btn-sm btn-rounded"
+                          onClick={() => {
+                            setSelectedFlashcardID(lesson.flashcardID);
+                            setIsModalDetailFlashcardVisible(true);
+                          }}
+                        >
+                          <EyeOutlined />
+                        </button>
+                      )}
                       <button className="btn btn-icon btn-hover btn-sm btn-rounded">
                         <DeleteOutlined />
                       </button>
                     </td>
                   </tr>
                 ))}
-                {exercises.map((exercise) => (
-                  <tr key={exercise.exerciseID}>
-                    <td>{getLessonTitleById(exercise.lessonID)}</td>
-                    <td>Exercise</td>
-                    <td>{exercise.createdAt}</td>
-                    <td>
-                      <button className="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
-                        <EditOutlined />
-                      </button>
-                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
-                        <EyeOutlined />
-                      </button>
-                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
-                        <DeleteOutlined />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-                {flashcards.map((flashcard) => (
-                  <tr key={flashcard.flashcardID}>
-                    <td>{getLessonTitleById(flashcard.lessonID)}</td>
-                    <td>Flashcard</td>
-                    <td>{flashcard.createdAt}</td>
-                    <td>
-                      <button className="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
-                        <EditOutlined />
-                      </button>
-                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
-                        <EyeOutlined />
-                      </button>
-                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
-                        <DeleteOutlined />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-                {videoLessons.map((videoLesson) => (
-                  <tr key={videoLesson.videoID}>
-                    <td>{getLessonTitleById(videoLesson.lessonID)}</td>
-                    <td>Video</td>
-                    <td>{videoLesson.createdAt}</td>
-                    <td>
-                      <button className="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
-                        <EditOutlined />
-                      </button>
-                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
-                        <EyeOutlined />
-                      </button>
-                      <button className="btn btn-icon btn-hover btn-sm btn-rounded">
-                        <DeleteOutlined />
-                      </button>
-                    </td>
-                  </tr>
-                ))}              
               </tbody>
             </table>
+            <Pagination
+              current={currentLessonTypePage}
+              pageSize={pageSize}
+              total={allLessonTypes.length}
+              onChange={(page) => {
+                console.log("Changing to page:", page);
+                setCurrentLessonTypePage(page);
+              }}
+              className="m-t-20"
+            />
           </div>
         );
       case "lesson":
@@ -267,7 +329,7 @@ const CourseLayout = () => {
                 </tr>
               </thead>
               <tbody>
-                {lessons.map((lesson) => (
+                {paginatedLessons.map((lesson) => (
                   <tr key={lesson.lessonID}>
                     <td>{lesson.title}</td>
                     <td>{getCourseTitleById(lesson.courseID)}</td>
@@ -284,6 +346,13 @@ const CourseLayout = () => {
                 ))}
               </tbody>
             </table>
+            <Pagination
+              current={currentLessonPage}
+              pageSize={pageSize}
+              total={courses.length}
+              onChange={(page) => setCurrentLessonPage(page)}
+              className="m-t-20"
+            />
           </div>
         );
       default:
@@ -443,6 +512,22 @@ const CourseLayout = () => {
         />
       </Modal>
       <Modal
+        title="Detail Theory Lesson"
+        open={isModalDetailTheoryLessonVisible}
+        onCancel={() => {
+          setIsModalDetailTheoryLessonVisible(false);
+          setSelectedTheoryID(null); // Reset the selected theoryID when closing the modal
+        }}
+        footer={null}
+      >
+        {selectedTheoryID && (
+          <DetailTheoryLesson
+            lessons={lessons}
+            theoryID={selectedTheoryID} // Pass the selected theoryID
+          />
+        )}
+      </Modal>
+      <Modal
         title="Create Flashcard"
         open={isModalCreateFlashcardVisible}
         onCancel={() => setIsModalCreateFlashcardVisible(false)}
@@ -456,6 +541,22 @@ const CourseLayout = () => {
         />
       </Modal>
       <Modal
+        title="Detail Flashcard"
+        open={isModalDetailFlashcardVisible}
+        onCancel={() => {
+          setIsModalDetailFlashcardVisible(false);
+          setSelectedFlashcardID(null); // Reset the selected theoryID when closing the modal
+        }}
+        footer={null}
+      >
+        {selectedFlashcardID && (
+          <DetailFlashcard
+            lessons={lessons}
+            flashcardID={selectedFlashcardID} // Pass the selected theoryID
+          />
+        )}
+      </Modal>
+      <Modal
         title="Create Exercise"
         open={isModalCreateExerciseVisible}
         onCancel={() => setIsModalCreateExerciseVisible(false)}
@@ -467,6 +568,38 @@ const CourseLayout = () => {
             fetchLessonType();
           }}
         />
+      </Modal>
+      <Modal
+        title="Detail Exercise"
+        open={isModalDetailExerciseVisible}
+        onCancel={() => {
+          setIsModalDetailExerciseVisible(false);
+          setSelectedExerciseID(null); // Reset the selected theoryID when closing the modal
+        }}
+        footer={null}
+      >
+        {selectedExerciseID && (
+          <DetailExercise
+            lessons={lessons}
+            exerciseID={selectedExerciseID} // Pass the selected theoryID
+          />
+        )}
+      </Modal>
+      <Modal
+        title="Detail Video Lesson"
+        open={isModalDetailVideoLessonVisible}
+        onCancel={() => {
+          setIsModalDetailVideoLessonVisible(false);
+          setSelectedVideoLessonID(null); // Reset the selected theoryID when closing the modal
+        }}
+        footer={null}
+      >
+        {selectedVideoLessonID && (
+          <DetailVideoLesson
+            lessons={lessons}
+            videoID={selectedVideoLessonID} // Pass the selected theoryID
+          />
+        )}
       </Modal>
       <Modal
         title="Create Video Lesson"

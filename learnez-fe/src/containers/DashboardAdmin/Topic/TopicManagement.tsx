@@ -6,27 +6,29 @@ import {
 import { getAllTopics } from "../../../services/topic.service";
 import { useEffect, useState } from "react";
 import { Topic } from "../../../models/Topic.model";
-import { Modal } from "antd";
+import { Modal, Pagination } from "antd";
 import CreateTopic from "./CreateTopic";
 
 const TopicManagement = () => {
-  const [isModalCreateTopicVisible, setIsModalCreateTopicVisible] =
-    useState(false);
+  const [isModalCreateTopicVisible, setIsModalCreateTopicVisible] = useState(false);
   const [topics, setTopics] = useState<Topic[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6;
 
   const fetchTopics = async () => {
     try {
-      const getTopics = await getAllTopics(1, pageSize);
+      const getTopics = await getAllTopics(1, 100);
       setTopics(getTopics);
-      console.log(getTopics);
     } catch (error) {
       console.error("Failed to fetch topics:", error);
     }
   };
+
   useEffect(() => {
     fetchTopics();
   }, []);
+
+  const paginatedTopics = topics.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
   return (
     <div className="page-container">
@@ -38,10 +40,7 @@ const TopicManagement = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <h5>Topic Management</h5>
                   <div>
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => setIsModalCreateTopicVisible(true)}
-                    >
+                    <button className="btn btn-primary" onClick={() => setIsModalCreateTopicVisible(true)}>
                       <PlusOutlined />
                       <span className="m-l-5">New Topic</span>
                     </button>
@@ -58,7 +57,7 @@ const TopicManagement = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {topics.map((topic) => (
+                        {paginatedTopics.map((topic) => (
                           <tr key={topic.topicId}>
                             <td>{topic.topicId}</td>
                             <td>{topic.name}</td>
@@ -75,6 +74,13 @@ const TopicManagement = () => {
                       </tbody>
                     </table>
                   </div>
+                  <Pagination
+                    current={currentPage}
+                    pageSize={pageSize}
+                    total={topics.length}
+                    onChange={(page) => setCurrentPage(page)}
+                    className="m-t-20"
+                  />
                 </div>
               </div>
             </div>

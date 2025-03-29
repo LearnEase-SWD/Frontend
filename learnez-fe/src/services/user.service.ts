@@ -2,7 +2,7 @@ import axiosInstance from "./axiosInstance";
 
 export const getUserbyEmail = async (email: any) => {
     try {
-      const res = await axiosInstance.get(`/users?email=${email}`);
+      const res = await axiosInstance.get(`/users/email/${email}`);
       return res.data ;
     } catch (error: any) {
       console.error(error);
