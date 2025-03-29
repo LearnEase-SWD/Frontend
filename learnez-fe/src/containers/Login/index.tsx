@@ -1,6 +1,5 @@
 import {  handleLogin } from "../../services/auth.service";
 import "./index.scss";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
 
 const Login = () => {
   return (  
@@ -15,66 +14,10 @@ const Login = () => {
               <div className="col-md-5">
                 <div className="card">
                   <div className="card-body">
-                    <h2 className="m-t-20">Sign In</h2>
-                    <p className="m-b-30">
-                      Enter your credential to get access
-                    </p>
-
-                    <form>
-                      <div className="form-group">
-                        <label
-                          className="font-weight-semibold"
-                          htmlFor="userName"
-                        >
-                          Username:
-                        </label>
-                        <div className="input-affix">
-                          <UserOutlined className="prefix-icon" />
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="userName"
-                            placeholder="Username"
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group">
-                        <label
-                          className="font-weight-semibold"
-                          htmlFor="password"
-                        >
-                          Password:
-                        </label>
-                        <a
-                          className="float-right font-size-13 text-muted"
-                          href="#"
-                        >
-                          Forget Password?
-                        </a>
-                        <div className="input-affix m-b-10">
-                          <LockOutlined className="prefix-icon" />
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="password"
-                            placeholder="Password"
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group">
-                        <div className="d-flex align-items-center justify-content-between">
-                          <button className="btn btn-primary">
-                            <a className="button-sign-in" href="/dashboard">
-                              Sign In
-                            </a>
-                          </button>
-                        </div>
-                      </div>
-                    </form>
+                    <h2 className="m-t-20 text-center">Log In</h2>
 
                     {/* Google Login */}
                     <div className="form-group text-center">
-                      <p className="m-b-10">Or </p>
                       <div>
                         <button id="google-login-btn" onClick={handleLogin}>
                           <img
