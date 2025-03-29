@@ -17,7 +17,6 @@ import {
 } from "../../../../services/lesson.service";
 import { Lesson } from "../../../../models/Lesson.model";
 import { handleNotify } from "../../../../utils/handleNotify";
-import dayjs from "dayjs";
 import { PlusOutlined } from "@ant-design/icons";
 import { API_UPLOAD_FILE } from "../../../../constants/upload";
 
@@ -44,7 +43,6 @@ const CreateVideoLesson: React.FC<VideoLessonFormProps> = ({ onSuccess }) => {
   };
   const onFinish = async (values: {
     lessonID: string;
-    videoURL: string;
     transcript: string;
     duration: string;
   }) => {
@@ -53,12 +51,14 @@ const CreateVideoLesson: React.FC<VideoLessonFormProps> = ({ onSuccess }) => {
         handleNotify("Please upload an image before submitting", "error");
         return;
       }
-      const courseData = {
-        ...values,
-        videoURL: uploadedVideoUrl,
+      const payload = {
+        lessonID: values.lessonID,
+        transcript: values.transcript,
+        duration: values.duration,
+        videoURL: uploadedVideoUrl, // Use the uploaded video URL
       };
-      console.log(courseData);
-      const res = await createVideoLesson(values);
+      console.log(payload);
+      const res = await createVideoLesson(payload);
       if (res) {
         handleNotify("Lesson created successfully", "");
         onSuccess && onSuccess();

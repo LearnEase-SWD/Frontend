@@ -14,7 +14,7 @@ export const handleLogin = async () => {
 export const handleAccessToken = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const userEmail = urlParams.get("userEmail");
-  console.log(window.location.search);
+
   if (userEmail) {
     // Save accessToken to localStorage
     localStorage.setItem("userEmail", userEmail);
