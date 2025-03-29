@@ -8,25 +8,28 @@ import "./index.scss";
 import { useEffect, useState } from "react";
 import { User } from "../../../models/User.model";
 import { getAllUsers } from "../../../services/user.service";
+import { handleAccessToken } from "../../../services/auth.service";
+import { Pagination } from "antd";
+
 const UserManagement = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6;
-  const pageIndex = 1;
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const getUsers = await getAllUsers(pageIndex, pageSize);
+        const getUsers = await getAllUsers(1, 100); // Fetching all users initially
         setUsers(getUsers);
         setFilteredUsers(getUsers);
-        console.log(getUsers);
       } catch (error) {
         console.error("Failed to fetch users:", error);
       }
     };
-
     fetchUsers();
+    handleAccessToken();
   }, []);
 
   const handleSearch = () => {
@@ -34,7 +37,10 @@ const UserManagement = () => {
       user.userName.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredUsers(filtered);
+    setCurrentPage(1); // Reset to first page after search
   };
+
+  const paginatedUsers = filteredUsers.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
   return (
     <div className="page-container">
@@ -57,10 +63,7 @@ const UserManagement = () => {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                       />
-                      <button
-                        className="btn btn-icon btn-default"
-                        onClick={handleSearch}
-                      >
+                      <button className="btn btn-icon btn-default" onClick={handleSearch}>
                         <ArrowRightOutlined />
                       </button>
                     </div>
@@ -80,7 +83,7 @@ const UserManagement = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {filteredUsers.map((user) => (
+                          {paginatedUsers.map((user) => (
                             <tr key={user.userId}>
                               <td>{user.userName}</td>
                               <td>{user.email}</td>
@@ -111,35 +114,13 @@ const UserManagement = () => {
                         </tbody>
                       </table>
                     </div>
-                  </div>
-                  <div className="m-t-20 text-right">
-                    <ul className="pagination justify-content-end">
-                      <li className="page-item">
-                        <a className="page-link" href="#">
-                          Previous
-                        </a>
-                      </li>
-                      <li className="page-item active">
-                        <a className="page-link" href="#">
-                          1
-                        </a>
-                      </li>
-                      <li className="page-item">
-                        <a className="page-link" href="#">
-                          2
-                        </a>
-                      </li>
-                      <li className="page-item">
-                        <a className="page-link" href="#">
-                          3
-                        </a>
-                      </li>
-                      <li className="page-item">
-                        <a className="page-link" href="#">
-                          Next
-                        </a>
-                      </li>
-                    </ul>
+                    <Pagination
+                      current={currentPage}
+                      pageSize={pageSize}
+                      total={filteredUsers.length}
+                      onChange={(page) => setCurrentPage(page)}
+                      className="m-t-20"
+                    />
                   </div>
                 </div>
               </div>

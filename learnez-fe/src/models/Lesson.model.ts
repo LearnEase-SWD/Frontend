@@ -15,15 +15,17 @@ export interface Lesson {
 export interface TheoryLesson {
     lessonID: string,
     theoryID: string,
+    lessonType: number,
     content: string,
     examples: string,
     createdAt: string,
 }
 export interface Exercise {
-    exerciseID: string,
     lessonID: string,
+    exerciseID: string,
+    lessonType: number,
     lesson: null,
-    type: string,
+    exerciseType: string,
     question: string,
     answerOptions: string,
     correctAnswer: string,
@@ -33,6 +35,7 @@ export interface Exercise {
 export interface Flashcard {
     flashcardID: string,
     lessonID: string,
+    lessonType: number,
     lesson: null,
     front: string,
     back: string,
@@ -43,6 +46,7 @@ export interface Flashcard {
 export interface VideoLesson {
     videoID: string,
     lessonID: string,
+    lessonType: number,
     videoURL: string,
     duration: string,
     createdAt: string
@@ -51,7 +55,7 @@ export enum LessonType {
     Video = 0,
     Theory = 1,
     Exercise = 2,
-    Conversation = 3
+    Flashcard = 3
 }
 
 export interface CreateLesson { 
@@ -83,4 +87,27 @@ export interface CreateVideoLesson {
     videoURL: string,
     transcript: string,
     duration: string
+}
+export interface AllLessonType {
+    theoryID: string,
+    content: string,
+    examples: string,
+    createdAt: string,
+    exerciseID: string,
+    lessonType: number,
+    lesson: null,
+    type: string,
+    question: string,
+    answerOptions: string,
+    correctAnswer: string,
+    userExercises: [],
+    flashcardID: string,
+    lessonID: string,
+    front: string,
+    back: string,
+    pronunciationAudioURL: null,
+    userFlashcards: []
+    videoID: string,
+    videoURL: string,
+    duration: string,
 }

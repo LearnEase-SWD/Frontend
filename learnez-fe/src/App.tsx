@@ -8,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 import LayoutAdmin from "./layouts/layout.main";
 import LoginPage from "./pages/LoginPage";
 import UserManagement from "./containers/DashboardAdmin/User/UserManagement";
-import DashboardAdmin from "./containers/DashboardAdmin";
 import OrderManagement from "./containers/DashboardAdmin/Order/OrderManagement";
 import CourseLayout from "./containers/DashboardAdmin/Course/CourseLayout";
 import TopicManagement from "./containers/DashboardAdmin/Topic/TopicManagement";
@@ -20,7 +19,7 @@ function App() {
         <Routes>
           <Route path="/callback">
             <Route element={<LayoutAdmin />}>
-              <Route index element={<DashboardAdmin />} />
+              <Route index element={<UserManagement />} />
               <Route path="users" element={<UserManagement />} />
               <Route path="orders" element={<OrderManagement />} />
               <Route path="topics" element={<TopicManagement />} />

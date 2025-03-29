@@ -1,14 +1,4 @@
-import {
-  AppstoreOutlined,
-  BuildOutlined,
-  DashboardOutlined,
-  FileOutlined,
-  FormOutlined,
-  HddOutlined,
-  LockOutlined,
-  PieChartOutlined,
-  TableOutlined,
-} from "@ant-design/icons";
+import { DashboardOutlined } from "@ant-design/icons";
 import { Link, useLocation } from "react-router-dom";
 
 interface SidebarAdminProps {
@@ -38,24 +28,20 @@ const SidebarAdmin: React.FC<SidebarAdminProps> = ({ isFolded }) => {
                 </span>
               </a>
               <ul className="dropdown-menu">
-                <li className={isActive("/callback") ? "active" : ""}>
+                {/* <li className={isActive("/callback") ? "active" : ""}>
                   <Link to="/callback">Default</Link>
-                </li>
+                </li> */}
                 <li className={isActive("/callback/users") ? "active" : ""}>
                   <Link to="/callback/users">Users</Link>
                 </li>
                 <li className={isActive("/callback/orders") ? "active" : ""}>
                   <Link to="/callback/orders">Orders</Link>
                 </li>
-                <li
-                  className={isActive("/callback/topics") ? "active" : ""}
-                >
+                <li className={isActive("/callback/topics") ? "active" : ""}>
                   <Link to="/callback/topics">Topics</Link>
                 </li>
                 <li
-                  className={
-                    isActive("/callback/courseLayout") ? "active" : ""
-                  }
+                  className={isActive("/callback/courseLayout") ? "active" : ""}
                 >
                   <Link to="/callback/courseLayout">Courses</Link>
                 </li>

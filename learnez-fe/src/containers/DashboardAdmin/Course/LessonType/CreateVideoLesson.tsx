@@ -152,7 +152,7 @@ const CreateVideoLesson: React.FC<VideoLessonFormProps> = ({ onSuccess }) => {
 
       <Form.Item>
         <Button type="primary" htmlType="submit" block>
-          Create Theory Lesson
+          Create Video Lesson
         </Button>
       </Form.Item>
     </Form>
